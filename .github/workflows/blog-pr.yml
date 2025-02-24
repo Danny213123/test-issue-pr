@@ -1,0 +1,118 @@
+name: Auto Create Blog Post PR
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create-blog-pr:
+    runs-on: ubuntu-latest
+    # Optional: Run only if the issue title starts with "[Blog Post]"
+    if: startsWith(github.event.issue.title, '[Blog Post]')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Extract Inputs from Issue Body
+        id: extract
+        shell: bash
+        run: |
+          # Save the issue body into a variable
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          echo "Issue body:"
+          echo "$ISSUE_BODY"
+
+          # Parse each field from the issue body using grep and sed.
+          # Adjust the regular expressions as needed based on your form output.
+          BLOG_TITLE=$(echo "$ISSUE_BODY" | grep -i "Blog Title:" | sed 's/Blog Title:[[:space:]]*//I' | xargs)
+          BLOG_DATE=$(echo "$ISSUE_BODY" | grep -i "Blog Release Date:" | sed 's/Blog Release Date:[[:space:]]*//I' | xargs)
+          BLOG_AUTHORS=$(echo "$ISSUE_BODY" | grep -i "Blog Author(s):" | sed 's/Blog Author(s):[[:space:]]*//I' | xargs)
+          BLOG_TAGS=$(echo "$ISSUE_BODY" | grep -i "Blog Tags:" | sed 's/Blog Tags:[[:space:]]*//I' | xargs)
+          BLOG_CATEGORY=$(echo "$ISSUE_BODY" | grep -i "Blog Category:" | sed 's/Blog Category:[[:space:]]*//I' | xargs)
+          BLOG_AUDIENCE=$(echo "$ISSUE_BODY" | grep -i "Blog Audience:" | sed 's/Blog Audience:[[:space:]]*//I' | xargs)
+          BLOG_KEY_VALUE_PROPOSITION=$(echo "$ISSUE_BODY" | grep -i "Blog Key Value Proposition:" | sed 's/Blog Key Value Proposition:[[:space:]]*//I' | xargs)
+          BLOG_KEYWORDS=$(echo "$ISSUE_BODY" | grep -i "Blog Keywords:" | sed 's/Blog Keywords:[[:space:]]*//I' | xargs)
+          BLOG_AMD_TECHNICAL_BLOG_TYPE=$(echo "$ISSUE_BODY" | grep -i "Blog AMD Technical Blog Type:" | sed 's/Blog AMD Technical Blog Type:[[:space:]]*//I' | xargs)
+          BLOG_AMD_DEVELOPER_TYPE=$(echo "$ISSUE_BODY" | grep -i "Blog AMD Developer Type:" | sed 's/Blog AMD Developer Type:[[:space:]]*//I' | xargs)
+          BLOG_AMD_DEVELOPER_TOOL=$(echo "$ISSUE_BODY" | grep -i "Blog AMD Developer Tool:" | sed 's/Blog AMD Developer Tool:[[:space:]]*//I' | xargs)
+          BLOG_AMD_APPLICATIONS=$(echo "$ISSUE_BODY" | grep -i "Blog AMD Applications:" | sed 's/Blog AMD Applications:[[:space:]]*//I' | xargs)
+
+          # Create a slug from the blog title (lowercase, spaces replaced by hyphens, alphanumeric only)
+          SLUG=$(echo "$BLOG_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -dc '[:alnum:]-')
+
+          echo "Extracted values:"
+          echo "BLOG_TITLE: $BLOG_TITLE"
+          echo "SLUG: $SLUG"
+
+          # Set outputs for later steps (using the new GITHUB_OUTPUT method)
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "blog_title=$BLOG_TITLE" >> "$GITHUB_OUTPUT"
+          echo "blog_date=$BLOG_DATE" >> "$GITHUB_OUTPUT"
+          echo "blog_authors=$BLOG_AUTHORS" >> "$GITHUB_OUTPUT"
+          echo "blog_tags=$BLOG_TAGS" >> "$GITHUB_OUTPUT"
+          echo "blog_category=$BLOG_CATEGORY" >> "$GITHUB_OUTPUT"
+          echo "blog_audience=$BLOG_AUDIENCE" >> "$GITHUB_OUTPUT"
+          echo "blog_key_value_proposition=$BLOG_KEY_VALUE_PROPOSITION" >> "$GITHUB_OUTPUT"
+          echo "blog_keywords=$BLOG_KEYWORDS" >> "$GITHUB_OUTPUT"
+          echo "blog_amd_technical_blog_type=$BLOG_AMD_TECHNICAL_BLOG_TYPE" >> "$GITHUB_OUTPUT"
+          echo "blog_amd_developer_type=$BLOG_AMD_DEVELOPER_TYPE" >> "$GITHUB_OUTPUT"
+          echo "blog_amd_developer_tool=$BLOG_AMD_DEVELOPER_TOOL" >> "$GITHUB_OUTPUT"
+          echo "blog_amd_applications=$BLOG_AMD_APPLICATIONS" >> "$GITHUB_OUTPUT"
+
+      - name: Create Blog Directory and Markdown File
+        run: |
+          SLUG="${{ steps.extract.outputs.slug }}"
+          # Create a directory for the blog post (e.g., under content/blog)
+          mkdir -p "content/blog/${SLUG}"
+          # Create an initial Markdown file with front matter using the extracted inputs
+          cat > "content/blog/${SLUG}/index.md" <<EOF
+          ---
+          title: "${{ steps.extract.outputs.blog_title }}"
+          date: "${{ steps.extract.outputs.blog_date }}"
+          authors: "${{ steps.extract.outputs.blog_authors }}"
+          tags: "${{ steps.extract.outputs.blog_tags }}"
+          category: "${{ steps.extract.outputs.blog_category }}"
+          audience: "${{ steps.extract.outputs.blog_audience }}"
+          key_value_proposition: "${{ steps.extract.outputs.blog_key_value_proposition }}"
+          keywords: "${{ steps.extract.outputs.blog_keywords }}"
+          amd_technical_blog_type: "${{ steps.extract.outputs.blog_amd_technical_blog_type }}"
+          amd_developer_type: "${{ steps.extract.outputs.blog_amd_developer_type }}"
+          amd_developer_tool: "${{ steps.extract.outputs.blog_amd_developer_tool }}"
+          amd_applications: "${{ steps.extract.outputs.blog_amd_applications }}"
+          ---
+          
+          # ${{ steps.extract.outputs.blog_title }}
+          
+          Write your blog content here.
+          EOF
+
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          BRANCH="blog/${{ steps.extract.outputs.slug }}"
+          git checkout -b "$BRANCH"
+          git add content/blog/${{ steps.extract.outputs.slug }}
+          git commit -m "Add blog post: ${{ steps.extract.outputs.blog_title }}"
+          git push --set-upstream origin "$BRANCH"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: "blog/${{ steps.extract.outputs.slug }}"
+          title: "Add blog post: ${{ steps.extract.outputs.blog_title }}"
+          commit-message: "Automated blog post creation for issue #${{ github.event.issue.number }}"
+          body: |
+            This PR adds a new blog post based on issue #${{ github.event.issue.number }}.
+            **Blog Title:** ${{ steps.extract.outputs.blog_title }}
+            **Blog Date:** ${{ steps.extract.outputs.blog_date }}
+            **Blog Authors:** ${{ steps.extract.outputs.blog_authors }}
+            **Blog Tags:** ${{ steps.extract.outputs.blog_tags }}
+            **Blog Category:** ${{ steps.extract.outputs.blog_category }}
+            **Blog Audience:** ${{ steps.extract.outputs.blog_audience }}
+            **Key Value Proposition:** ${{ steps.extract.outputs.blog_key_value_proposition }}
+            **Blog Keywords:** ${{ steps.extract.outputs.blog_keywords }}
+            **AMD Technical Blog Type:** ${{ steps.extract.outputs.blog_amd_technical_blog_type }}
+            **AMD Developer Type:** ${{ steps.extract.outputs.blog_amd_developer_type }}
+            **AMD Developer Tool:** ${{ steps.extract.outputs.blog_amd_developer_tool }}
+            **AMD Applications:** ${{ steps.extract.outputs.blog_amd_applications }}
