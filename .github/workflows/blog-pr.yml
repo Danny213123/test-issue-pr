@@ -24,7 +24,7 @@ jobs:
 
           # Parse each field from the issue body using grep and sed.
           # Adjust the regular expressions as needed based on your form output.
-          BLOG_TITLE=$(echo "$ISSUE_BODY" | grep -i "Blog Title:" | sed 's/Blog Title:[[:space:]]*//I' | xargs)
+          BLOG_TITLE=$(echo "$ISSUE_BODY" | awk '/### Blog Title/{getline; print}' | xargs)
           BLOG_DATE=$(echo "$ISSUE_BODY" | grep -i "Blog Release Date:" | sed 's/Blog Release Date:[[:space:]]*//I' | xargs)
           BLOG_AUTHORS=$(echo "$ISSUE_BODY" | grep -i "Blog Author(s):" | sed 's/Blog Author(s):[[:space:]]*//I' | xargs)
           BLOG_TAGS=$(echo "$ISSUE_BODY" | grep -i "Blog Tags:" | sed 's/Blog Tags:[[:space:]]*//I' | xargs)
