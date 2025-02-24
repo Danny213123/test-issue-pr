@@ -85,5 +85,5 @@ body:
     attributes:
       label: "Blog AMD Applications"
       description: "Enter in the application for this blog"
-     validations:
+    validations:
       required: true
