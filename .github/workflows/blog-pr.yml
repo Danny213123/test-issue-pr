@@ -25,39 +25,6 @@ jobs:
           # Parse each field from the issue body using grep and sed.
           # Adjust the regular expressions as needed based on your form output.
           BLOG_TITLE=$(echo "$ISSUE_BODY" | awk '/### Blog Title/{getline; print}' | xargs)
-          BLOG_DATE=$(echo "$ISSUE_BODY" | grep -i "Blog Release Date:" | sed 's/Blog Release Date:[[:space:]]*//I' | xargs)
-          BLOG_AUTHORS=$(echo "$ISSUE_BODY" | grep -i "Blog Author(s):" | sed 's/Blog Author(s):[[:space:]]*//I' | xargs)
-          BLOG_TAGS=$(echo "$ISSUE_BODY" | grep -i "Blog Tags:" | sed 's/Blog Tags:[[:space:]]*//I' | xargs)
-          BLOG_CATEGORY=$(echo "$ISSUE_BODY" | grep -i "Blog Category:" | sed 's/Blog Category:[[:space:]]*//I' | xargs)
-          BLOG_AUDIENCE=$(echo "$ISSUE_BODY" | grep -i "Blog Audience:" | sed 's/Blog Audience:[[:space:]]*//I' | xargs)
-          BLOG_KEY_VALUE_PROPOSITION=$(echo "$ISSUE_BODY" | grep -i "Blog Key Value Proposition:" | sed 's/Blog Key Value Proposition:[[:space:]]*//I' | xargs)
-          BLOG_KEYWORDS=$(echo "$ISSUE_BODY" | grep -i "Blog Keywords:" | sed 's/Blog Keywords:[[:space:]]*//I' | xargs)
-          BLOG_AMD_TECHNICAL_BLOG_TYPE=$(echo "$ISSUE_BODY" | grep -i "Blog AMD Technical Blog Type:" | sed 's/Blog AMD Technical Blog Type:[[:space:]]*//I' | xargs)
-          BLOG_AMD_DEVELOPER_TYPE=$(echo "$ISSUE_BODY" | grep -i "Blog AMD Developer Type:" | sed 's/Blog AMD Developer Type:[[:space:]]*//I' | xargs)
-          BLOG_AMD_DEVELOPER_TOOL=$(echo "$ISSUE_BODY" | grep -i "Blog AMD Developer Tool:" | sed 's/Blog AMD Developer Tool:[[:space:]]*//I' | xargs)
-          BLOG_AMD_APPLICATIONS=$(echo "$ISSUE_BODY" | grep -i "Blog AMD Applications:" | sed 's/Blog AMD Applications:[[:space:]]*//I' | xargs)
-
-          # Create a slug from the blog title (lowercase, spaces replaced by hyphens, alphanumeric only)
-          SLUG=$(echo "$BLOG_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -dc '[:alnum:]-')
-
-          echo "Extracted values:"
-          echo "BLOG_TITLE: $BLOG_TITLE"
-          echo "SLUG: $SLUG"
-
-          # Set outputs for later steps (using the new GITHUB_OUTPUT method)
-          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
-          echo "blog_title=$BLOG_TITLE" >> "$GITHUB_OUTPUT"
-          echo "blog_date=$BLOG_DATE" >> "$GITHUB_OUTPUT"
-          echo "blog_authors=$BLOG_AUTHORS" >> "$GITHUB_OUTPUT"
-          echo "blog_tags=$BLOG_TAGS" >> "$GITHUB_OUTPUT"
-          echo "blog_category=$BLOG_CATEGORY" >> "$GITHUB_OUTPUT"
-          echo "blog_audience=$BLOG_AUDIENCE" >> "$GITHUB_OUTPUT"
-          echo "blog_key_value_proposition=$BLOG_KEY_VALUE_PROPOSITION" >> "$GITHUB_OUTPUT"
-          echo "blog_keywords=$BLOG_KEYWORDS" >> "$GITHUB_OUTPUT"
-          echo "blog_amd_technical_blog_type=$BLOG_AMD_TECHNICAL_BLOG_TYPE" >> "$GITHUB_OUTPUT"
-          echo "blog_amd_developer_type=$BLOG_AMD_DEVELOPER_TYPE" >> "$GITHUB_OUTPUT"
-          echo "blog_amd_developer_tool=$BLOG_AMD_DEVELOPER_TOOL" >> "$GITHUB_OUTPUT"
-          echo "blog_amd_applications=$BLOG_AMD_APPLICATIONS" >> "$GITHUB_OUTPUT"
 
       - name: Create Blog Directory and Markdown File
         run: |
