@@ -1,0 +1,89 @@
+name: "Create a new blog post"
+description: "Submit this form to automatically create a new blog post"
+title: "[Blog Post]"
+labels: ["Blog Creation"]
+body:
+  - type: input
+    id: blog_title
+    attributes:
+      label: "Blog Title"
+      description: "Enter the title of your blog post."
+    validations:
+      required: true
+  - type: input
+    id: blog_date
+    attributes:
+      label: "Blog Release Date"
+      description: "Target release date for your blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_authors
+    attributes:
+      label: "Blog Author(s)"
+      description: "Enter in the author(s) of the blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_tags
+    attributes:
+      label: "Blog Tags"
+      description: "Enter in the tag(s) of the blogs, please look at the approved tags list."
+    validations:
+      required: true
+  - type: input
+    id: blog_category
+    attributes:
+      label: "Blog Category"
+      description: "Enter in the category of the blog, please look at the approved category list."
+     validations:
+      required: true
+  - type: input
+    id: blog_target_audience
+    attributes:
+      label: "Blog Audience"
+      description: "Enter in the target audience for the blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_key_value_proposition
+    attributes:
+      label: "Blog Key Value Proposition"
+      description: "Enter in the key value propositions of the blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_keywords
+    attributes:
+      label: "Blog Keywords"
+      description: "Enter in the keywords of the blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_amd_technical_blog_type
+    attributes:
+      label: "Blog AMD Technical Blog Type"
+      description: "Enter in the technical blog type for this blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_amd_developer_type
+    attributes:
+      label: "Blog AMD Developer Type"
+      description: "Enter in the developer type for this blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_amd_developer_tool
+    attributes:
+      label: "Blog AMD Developer Type"
+      description: "Enter in the developer type for this blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_amd_applications
+    attributes:
+      label: "Blog AMD Applications"
+      description: "Enter in the application for this blog"
+     validations:
+      required: true
