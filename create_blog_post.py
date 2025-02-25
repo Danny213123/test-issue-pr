@@ -12,7 +12,7 @@ def create_blog_post_from_args():
     blog_tags = args[3]
     blog_category = args[4]
     blog_audience = args[5]
-    blog_kvp = args[6]
+    blog_key_value_proposition = args[6]
     blog_keywords = args[7]
     blog_amd_technical_blog_type = args[8]
     blog_amd_product_type = args[9]
