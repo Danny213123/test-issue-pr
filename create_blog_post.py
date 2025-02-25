@@ -1,4 +1,26 @@
+from datetime import datetime
 import sys
+from numpy import remainder as rem
+
+
+def is_leap_year(year: int) -> bool:
+    """Determine whether a year is a leap year."""
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+
+def calculate_day_of_week(y: int, m: int, d: int) -> str:
+    """return day of week of given date as string, using Gauss's algorithm to find it"""
+
+    if is_leap_year(y):
+        month_offset = (0, 3, 4, 0, 2, 5, 0, 3, 6, 1, 4, 6)[m - 1]
+    else:
+        month_offset = (0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5)[m - 1]
+    y -= 1
+    wd = int(
+        rem(d + month_offset + 5 * rem(y, 4) + 4 * rem(y, 100) + 6 * rem(y, 400), 7)
+    )
+
+    return ("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")[wd]
 
 def create_blog_post_from_args():
     # sys.argv[0] is the script name; the rest are your inputs
@@ -19,6 +41,53 @@ def create_blog_post_from_args():
     blog_amd_developer_type = args[10]
     blog_amd_applications = args[11]
     blog_amd_industries = args[12]
+
+    date_formats = [
+                "%d-%m-%Y",  # e.g. 8-08-2024
+                "%d/%m/%Y",  # e.g. 8/08/2024
+                "%d-%B-%Y",  # e.g. 8-August-2024
+                "%d-%b-%Y",  # e.g. 8-Aug-2024
+                "%d %B %Y",  # e.g. 8 August 2024
+                "%d %b %Y",  # e.g. 8 Aug 2024
+                "%d %B, %Y",  # e.g. 8 August, 2024
+                "%d %b, %Y",  # e.g. 8 Aug, 2024
+                "%B %d, %Y",  # e.g. August 8, 2024
+                "%b %d, %Y",  # e.g. Aug 8, 2024
+                "%B %d %Y",  # e.g. August 8 2024
+                "%b %d %Y",  # e.g. Aug 8 2024
+            ]
+
+    for fmt in date_formats:
+        try:
+            date_string = datetime.strptime(blog_release_date, fmt).strftime(
+                "%d %B %Y"
+            )
+            break
+        except ValueError:
+            continue
+
+    # check all of the date formats
+
+    # amd blog release date format Day-of-week Month Day, 12:00:00 PST Year
+    # calculate the day of week based on the date
+
+    day, month, year = date_string.split(" ")
+
+    month = month[:3]
+
+    date_formats = ["%b", "%B"]
+
+    for fmt in date_formats:
+        try:
+            d_month = datetime.strptime(month, fmt).month
+            break
+        except ValueError:
+            continue
+
+    day = int(day)
+    year = int(year)
+
+    day_of_week = calculate_day_of_week(year, d_month, day)
 
     blog_template = """
 ---
@@ -48,7 +117,7 @@ myst:
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
         "amd_applications": "'{blog_amd_applications}'"
         "amd_industries": "'{blog_amd_industries}'"
-        "amd_blog_releasedate": Tue April 16, 12:00:00 PST 2024
+        "amd_blog_releasedate": {dayweek} {month} {day}, 12:00:00 PST {year}
 ---
 """
     blog_template = blog_template.format(
@@ -65,9 +134,65 @@ myst:
         blog_amd_developer_type=blog_amd_developer_type,
         blog_amd_applications=blog_amd_applications,
         blog_amd_industries=blog_amd_industries,
+        dayweek=day_of_week,
+        month=month[:3],
+        day=day,
+        year=year
     )
 
     print(blog_template)
+
+def test():
+    blog_release_date = "16 April 2024"
+    
+    date_formats = [
+                "%d-%m-%Y",  # e.g. 8-08-2024
+                "%d/%m/%Y",  # e.g. 8/08/2024
+                "%d-%B-%Y",  # e.g. 8-August-2024
+                "%d-%b-%Y",  # e.g. 8-Aug-2024
+                "%d %B %Y",  # e.g. 8 August 2024
+                "%d %b %Y",  # e.g. 8 Aug 2024
+                "%d %B, %Y",  # e.g. 8 August, 2024
+                "%d %b, %Y",  # e.g. 8 Aug, 2024
+                "%B %d, %Y",  # e.g. August 8, 2024
+                "%b %d, %Y",  # e.g. Aug 8, 2024
+                "%B %d %Y",  # e.g. August 8 2024
+                "%b %d %Y",  # e.g. Aug 8 2024
+            ]
+
+    for fmt in date_formats:
+        try:
+            date_string = datetime.strptime(blog_release_date, fmt).strftime(
+                "%d %B %Y"
+            )
+            break
+        except ValueError:
+            continue
+
+    # check all of the date formats
+
+    # amd blog release date format Day-of-week Month Day, 12:00:00 PST Year
+    # calculate the day of week based on the date
+
+    day, month, year = date_string.split(" ")
+
+    month = month[:3]
+
+    date_formats = ["%b", "%B"]
+
+    for fmt in date_formats:
+        try:
+            d_month = datetime.strptime(month, fmt).month
+            break
+        except ValueError:
+            continue
+
+    day = int(day)
+    year = int(year)
+
+    day_of_week = calculate_day_of_week(year, d_month, day)
+
+    print(day_of_week)
 
 if __name__ == "__main__":
     create_blog_post_from_args()
