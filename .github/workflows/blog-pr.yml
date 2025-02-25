@@ -76,15 +76,9 @@ jobs:
         uses: peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: (Python) Auto Code Format
+          commit-message: (New Blog) Blog Post
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>   
           title:  "Python Auto format for ${{ github.event.pull_request.number }}"
           body: |
             Auto-Generated Pull Request 
-            @${{ github.event.pull_request.user.login }} please merge this PR to fix some python linting errors. Not all errors are automatically fixable.
-            Relates to #${{ github.event.pull_request.number }}
-          reviewers: "Saad Rahim (AMD) <44449863+saadrahim@users.noreply.github.com>"
-          maintainer-can-modify: true
-          labels: Backend
-          branch: python-code-format-${{ github.event.pull_request.number }}
-          base: ${{ github.head_ref }}
+            
