@@ -7,13 +7,12 @@ on:
 jobs:
   create-blog-pr:
     runs-on: ubuntu-latest
-    # Optional: Run only if the issue title starts with "[Blog Post]"
     if: startsWith(github.event.issue.title, '[Blog Post]')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Extract Inputs from Issue Body
+      - name: Extract Inputs from Issue Body and Create Blog Post
         id: extract
         shell: bash
         run: |
@@ -25,7 +24,6 @@ jobs:
           echo "$ISSUE_BODY"
 
           # Parse each field from the issue body using grep and sed.
-          # Adjust the regular expressions as needed based on your form output.
           extract_field() {
             local header="$1"
             echo "$ISSUE_BODY" | sed -n "/### ${header}/{
@@ -54,7 +52,6 @@ jobs:
           BLOG_AMD_APPLICATIONS=$(extract_field "Blog AMD Applications")
           BLOG_AMD_INDUSTRIES=$(extract_field "Blog AMD Industries")
           
-          # For debugging, print out the extracted values:
           echo "Blog Title: $BLOG_TITLE"
           echo "Blog Release Date: $BLOG_RELEASE_DATE"
           echo "Blog Author(s): $BLOG_AUTHORS"
@@ -69,5 +66,24 @@ jobs:
           echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
 
+          # Run the blog post creation script.
           python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_RELEASE_DATE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES"
 
+          # Set the blog title as an output for use in later steps.
+          echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request with Blog
+        uses: peter-evans/create-pull-request@v7.0.6
+        with:
+          commit-message: (Python) Auto Code Format
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>   
+          title:  "Python Auto format for ${{ github.event.pull_request.number }}"
+          body: |
+            Auto-Generated Pull Request 
+            @${{ github.event.pull_request.user.login }} please merge this PR to fix some python linting errors. Not all errors are automatically fixable.
+            Relates to #${{ github.event.pull_request.number }}
+          reviewers: "Saad Rahim (AMD) <44449863+saadrahim@users.noreply.github.com>"
+          maintainer-can-modify: true
+          labels: Backend
+          branch: python-code-format-${{ github.event.pull_request.number }}
+          base: ${{ github.head_ref }}
