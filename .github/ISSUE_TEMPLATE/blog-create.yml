@@ -42,21 +42,28 @@ body:
     id: blog_target_audience
     attributes:
       label: "Blog Audience"
-      description: "Enter in the target audience for the blog."
+      description: "Enter in the target audience(s) for the blog."
     validations:
       required: true
   - type: input
     id: blog_key_value_proposition
     attributes:
       label: "Blog Key Value Proposition"
-      description: "Enter in the key value propositions of the blog."
+      description: "Enter in the key value proposition(s) of the blog."
     validations:
       required: true
   - type: input
     id: blog_keywords
     attributes:
       label: "Blog Keywords"
-      description: "Enter in the keywords of the blog."
+      description: "Enter in the keyword(s) of the blog."
+    validations:
+      required: true
+  - type: input
+    id: blog_amd_product_type
+    attributes:
+      label: "Blog AMD Product Type"
+      description: "Enter in the product type(s) for this blog."
     validations:
       required: true
   - type: input
@@ -70,20 +77,20 @@ body:
     id: blog_amd_developer_type
     attributes:
       label: "Blog AMD Developer Type"
-      description: "Enter in the developer type for this blog."
+      description: "Enter in the expected developer type(s) for this blog."
     validations:
       required: true
   - type: input
     id: blog_amd_applications
     attributes:
       label: "Blog AMD Applications"
-      description: "Enter in the application for this blog"
+      description: "Enter in the expected application(s) for this blog"
     validations:
       required: true
   - type: input
     id: blog_amd_industries
     attributes:
       label: "Blog AMD Industries"
-      description: "Enter in the expected industries for this blog"
+      description: "Enter in the expected industries(s) for this blog"
     validations:
       required: true
