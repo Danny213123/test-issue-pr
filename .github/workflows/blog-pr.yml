@@ -62,7 +62,7 @@ jobs:
           echo "Blog Key Value Proposition: $BLOG_KVP"
           echo "Blog Keywords: $BLOG_KEYWORDS"
           echo "Blog AMD Technical Blog Type: $BLOG_AMD_TECHNICAL_BLOG_TYPE"
-          echi "Blog AMD Product Type: $BLOG_AMD_PRODUCT_TYPE"
+          echo "Blog AMD Product Type: $BLOG_AMD_PRODUCT_TYPE"
           echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
           echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
