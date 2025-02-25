@@ -62,4 +62,5 @@ jobs:
           echo "Blog Keywords: $BLOG_KEYWORDS"
           echo "Blog AMD Technical Blog Type: $BLOG_AMD_TECHNICAL_BLOG_TYPE"
           echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
+          echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
