@@ -24,7 +24,16 @@ jobs:
 
           # Parse each field from the issue body using grep and sed.
           # Adjust the regular expressions as needed based on your form output.
-          BLOG_TITLE=$(echo "$ISSUE_BODY" | sed -n '/### Blog Title/{n; :a; n; /./p; ba}')
+          BLOG_TITLE=$(echo "$ISSUE_BODY" | sed -n '/### Blog Title/{
+            n
+            :a
+            /^[[:space:]]*$/{
+              n
+              ba
+            }
+            p
+            q
+          }')
           BLOG_TITLE=$(echo "$BLOG_TITLE" | xargs)
           echo "Blog Title:"
           echo "$BLOG_TITLE"
