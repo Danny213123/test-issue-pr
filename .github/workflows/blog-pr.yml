@@ -17,6 +17,8 @@ jobs:
         id: extract
         shell: bash
         run: |
+          pip install numpy
+          
           # Save the issue body into a variable
           ISSUE_BODY="${{ github.event.issue.body }}"
           echo "Issue body:"
