@@ -74,16 +74,16 @@ body:
     validations:
       required: true
   - type: input
-    id: blog_amd_developer_tool
-    attributes:
-      label: "Blog AMD Developer Type"
-      description: "Enter in the developer type for this blog."
-    validations:
-      required: true
-  - type: input
     id: blog_amd_applications
     attributes:
       label: "Blog AMD Applications"
       description: "Enter in the application for this blog"
+    validations:
+      required: true
+  - type: input
+    id: blog_amd_industries
+    attributes:
+      label: "Blog AMD Industries"
+      description: "Enter in the expected industries for this blog"
     validations:
       required: true
