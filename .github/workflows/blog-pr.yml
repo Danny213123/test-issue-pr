@@ -48,9 +48,8 @@ jobs:
           BLOG_KEYWORDS=$(extract_field "Blog Keywords")
           BLOG_AMD_TECHNICAL_BLOG_TYPE=$(extract_field "Blog AMD Technical Blog Type")
           BLOG_AMD_DEVELOPER_TYPE=$(extract_field "Blog AMD Developer Type")
-          # Note: If you have duplicate headers like "Blog AMD Developer Type", you may need to differentiate them.
-          BLOG_AMD_DEVELOPER_TYPE_2=$(extract_field "Blog AMD Developer Type")  
           BLOG_AMD_APPLICATIONS=$(extract_field "Blog AMD Applications")
+          BLOG_AMD_INDUSTRIES=$(extract_field "Blog AMD Industries")
           
           # For debugging, print out the extracted values:
           echo "Blog Title: $BLOG_TITLE"
@@ -63,5 +62,4 @@ jobs:
           echo "Blog Keywords: $BLOG_KEYWORDS"
           echo "Blog AMD Technical Blog Type: $BLOG_AMD_TECHNICAL_BLOG_TYPE"
           echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
-          echo "Blog AMD Developer Type 2: $BLOG_AMD_DEVELOPER_TYPE_2"
-          echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
+          echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
