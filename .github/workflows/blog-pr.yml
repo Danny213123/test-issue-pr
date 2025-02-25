@@ -24,16 +24,44 @@ jobs:
 
           # Parse each field from the issue body using grep and sed.
           # Adjust the regular expressions as needed based on your form output.
-          BLOG_TITLE=$(echo "$ISSUE_BODY" | sed -n '/### Blog Title/{
-            n
-            :a
-            /^[[:space:]]*$/{
+          extract_field() {
+            local header="$1"
+            echo "$ISSUE_BODY" | sed -n "/### ${header}/{
               n
-              ba
-            }
-            p
-            q
-          }')
-          BLOG_TITLE=$(echo "$BLOG_TITLE" | xargs)
-          echo "Blog Title:"
-          echo "$BLOG_TITLE"
+              :a
+              /^[[:space:]]*\$/ {
+                n
+                ba
+              }
+              p
+              q
+            }" | xargs
+          }
+
+          BLOG_TITLE=$(extract_field "Blog Title")
+          BLOG_RELEASE_DATE=$(extract_field "Blog Release Date")
+          BLOG_AUTHORS=$(extract_field "Blog Author(s)")
+          BLOG_TAGS=$(extract_field "Blog Tags")
+          BLOG_CATEGORY=$(extract_field "Blog Category")
+          BLOG_AUDIENCE=$(extract_field "Blog Audience")
+          BLOG_KVP=$(extract_field "Blog Key Value Proposition")
+          BLOG_KEYWORDS=$(extract_field "Blog Keywords")
+          BLOG_AMD_TECHNICAL_BLOG_TYPE=$(extract_field "Blog AMD Technical Blog Type")
+          BLOG_AMD_DEVELOPER_TYPE=$(extract_field "Blog AMD Developer Type")
+          # Note: If you have duplicate headers like "Blog AMD Developer Type", you may need to differentiate them.
+          BLOG_AMD_DEVELOPER_TYPE_2=$(extract_field "Blog AMD Developer Type")  
+          BLOG_AMD_APPLICATIONS=$(extract_field "Blog AMD Applications")
+          
+          # For debugging, print out the extracted values:
+          echo "Blog Title: $BLOG_TITLE"
+          echo "Blog Release Date: $BLOG_RELEASE_DATE"
+          echo "Blog Author(s): $BLOG_AUTHORS"
+          echo "Blog Tags: $BLOG_TAGS"
+          echo "Blog Category: $BLOG_CATEGORY"
+          echo "Blog Audience: $BLOG_AUDIENCE"
+          echo "Blog Key Value Proposition: $BLOG_KVP"
+          echo "Blog Keywords: $BLOG_KEYWORDS"
+          echo "Blog AMD Technical Blog Type: $BLOG_AMD_TECHNICAL_BLOG_TYPE"
+          echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
+          echo "Blog AMD Developer Type 2: $BLOG_AMD_DEVELOPER_TYPE_2"
+          echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
