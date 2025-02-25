@@ -146,65 +146,13 @@ myst:
         year=year
     )
 
-    print(blog_template)
-
-def test():
-    blog_release_date = "16 April 2024"
-    
-    date_formats = [
-                "%d-%m-%Y",  # e.g. 8-08-2024
-                "%d/%m/%Y",  # e.g. 8/08/2024
-                "%d-%B-%Y",  # e.g. 8-August-2024
-                "%d-%b-%Y",  # e.g. 8-Aug-2024
-                "%d %B %Y",  # e.g. 8 August 2024
-                "%d %b %Y",  # e.g. 8 Aug 2024
-                "%d %B, %Y",  # e.g. 8 August, 2024
-                "%d %b, %Y",  # e.g. 8 Aug, 2024
-                "%B %d, %Y",  # e.g. August 8, 2024
-                "%b %d, %Y",  # e.g. Aug 8, 2024
-                "%B %d %Y",  # e.g. August 8 2024
-                "%b %d %Y",  # e.g. Aug 8 2024
-            ]
-
-    for fmt in date_formats:
-        try:
-            date_string = datetime.strptime(blog_release_date, fmt).strftime(
-                "%d %B %Y"
-            )
-            break
-        except ValueError:
-            continue
-
-    # check all of the date formats
-
-    # amd blog release date format Day-of-week Month Day, 12:00:00 PST Year
-    # calculate the day of week based on the date
-
-    day, month, year = date_string.split(" ")
-
-    month = month[:3]
-
-    date_formats = ["%b", "%B"]
-
-    for fmt in date_formats:
-        try:
-            d_month = datetime.strptime(month, fmt).month
-            break
-        except ValueError:
-            continue
-
-    day = int(day)
-    year = int(year)
-
-    day_of_week = calculate_day_of_week(year, d_month, day)
-
-    print(day_of_week)
-
-    os.makedirs("blogs/{blog_title}", exist_ok=True)
+    os.makedirs(f"blogs/{blog_title}", exist_ok=True)
 
     # create README.md
     with open(f"blogs/{blog_title}/README.md", "w") as f:
         f.write(blog_template)
+
+    return None
 
 if __name__ == "__main__":
     create_blog_post_from_args()
