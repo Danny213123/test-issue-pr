@@ -24,4 +24,6 @@ jobs:
 
           # Parse each field from the issue body using grep and sed.
           # Adjust the regular expressions as needed based on your form output.
-          BLOG_TITLE=$(echo "Test Issue Body $ISSUE_BODY" | awk '/### Blog Title/{getline; print}' | xargs)
+          BLOG_TITLE=$(echo "$ISSUE_BODY" | awk '/### Blog Title/{getline; print}' | xargs)
+          echo "Blog Title:"
+          echo "$BLOG_TITLE"
