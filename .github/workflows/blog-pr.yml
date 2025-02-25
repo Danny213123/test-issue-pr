@@ -47,6 +47,7 @@ jobs:
           BLOG_KVP=$(extract_field "Blog Key Value Proposition")
           BLOG_KEYWORDS=$(extract_field "Blog Keywords")
           BLOG_AMD_TECHNICAL_BLOG_TYPE=$(extract_field "Blog AMD Technical Blog Type")
+          BLOG_AMD_PRODUCT_TYPE=$(extract_field "Blog AMD Product Type")
           BLOG_AMD_DEVELOPER_TYPE=$(extract_field "Blog AMD Developer Type")
           BLOG_AMD_APPLICATIONS=$(extract_field "Blog AMD Applications")
           BLOG_AMD_INDUSTRIES=$(extract_field "Blog AMD Industries")
@@ -61,6 +62,7 @@ jobs:
           echo "Blog Key Value Proposition: $BLOG_KVP"
           echo "Blog Keywords: $BLOG_KEYWORDS"
           echo "Blog AMD Technical Blog Type: $BLOG_AMD_TECHNICAL_BLOG_TYPE"
+          echi "Blog AMD Product Type: $BLOG_AMD_PRODUCT_TYPE"
           echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
           echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
