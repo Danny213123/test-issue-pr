@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 import sys
 from numpy import remainder as rem
 
@@ -22,12 +23,17 @@ def calculate_day_of_week(y: int, m: int, d: int) -> str:
 
     return ("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")[wd]
 
-def create_blog_post_from_args():
-    # sys.argv[0] is the script name; the rest are your inputs
+def gather_args():
     args = sys.argv[1:]
     if len(args) < 13:
         print("Not enough arguments provided.")
         sys.exit(1)
+    
+    return args
+
+def create_blog_post_from_args():
+
+    args = gather_args()
     blog_title = args[0]
     blog_release_date = args[1]
     blog_authors = args[2]
@@ -193,6 +199,12 @@ def test():
     day_of_week = calculate_day_of_week(year, d_month, day)
 
     print(day_of_week)
+
+    os.makedirs("blogs/{blog_title}", exist_ok=True)
+
+    # create README.md
+    with open(f"blogs/{blog_title}/README.md", "w") as f:
+        f.write(blog_template)
 
 if __name__ == "__main__":
     create_blog_post_from_args()
