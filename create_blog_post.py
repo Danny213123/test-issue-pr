@@ -55,12 +55,19 @@ myst:
 
 if __name__ == "__main__":
     # Read entire input from stdin
-    data = sys.stdin.read().strip()
-    print("Input from stdin:", data)
-
-    # Split the input into a list
-    data_list = data.split("\n")
-    print("Split input into a list:", data_list)
+    blog_title = input()
+    blog_release_date = input()
+    blog_author = input()
+    blog_tags = input()
+    blog_category = input()
+    blog_audience = input()
+    blog_key_value_proposition = input()
+    blog_keywords = input()
+    blog_amd_technical_blog_type = input()
+    blog_amd_product_type = input()
+    blog_amd_developer_type = input()
+    blog_amd_applications = input()
+    blog_amd_industries = input()
 
     # Extract the metadata from the list
-    create_blog(data_list[0], data_list[1], data_list[2], data_list[3], data_list[4], data_list[5], data_list[6], data_list[7], data_list[8], data_list[9], data_list[10], data_list[11])
+    create_blog(blog_title, blog_release_date, blog_author, blog_tags, blog_category, blog_audience, blog_key_value_proposition, blog_keywords, blog_amd_technical_blog_type, blog_amd_product_type, blog_amd_developer_type, blog_amd_applications, blog_amd_industries)
