@@ -75,6 +75,7 @@ jobs:
       - name: Create Pull Request with Blog
         uses: peter-evans/create-pull-request@v7.0.6
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: (Python) Auto Code Format
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>   
           title:  "Python Auto format for ${{ github.event.pull_request.number }}"
