@@ -25,7 +25,7 @@ def create_blog_post_from_args():
 blogpost: false
 blog_title: "{blog_title}"
 date: {blog_release_date}
-author: '{blog_author}'
+author: '{blog_authors}'
 thumbnail: ''
 tags: {blog_tags}
 category: {blog_category}
@@ -54,7 +54,7 @@ myst:
     blog_template = blog_template.format(
         blog_title=blog_title,
         blog_release_date=blog_release_date,
-        blog_author=blog_author,
+        blog_authors=blog_authors,
         blog_tags=blog_tags,
         blog_category=blog_category,
         blog_audience=blog_audience,
