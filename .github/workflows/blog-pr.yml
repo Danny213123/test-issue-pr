@@ -97,4 +97,4 @@ jobs:
             [View the Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
             
             Thank you for your submission!
-          reactions: 
+          reactions: '+1'
