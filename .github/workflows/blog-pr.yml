@@ -1,9 +1,7 @@
 name: Auto Create Blog Post PR
-
 on:
   issues:
     types: [opened]
-
 jobs:
   create-blog-pr:
     permissions: write-all
@@ -12,7 +10,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Extract Inputs from Issue Body and Create Blog Post
         id: extract
         shell: bash
@@ -23,7 +20,6 @@ jobs:
           ISSUE_BODY="${{ github.event.issue.body }}"
           echo "Issue body:"
           echo "$ISSUE_BODY"
-
           # Parse each field from the issue body using grep and sed.
           extract_field() {
             local header="$1"
@@ -38,7 +34,6 @@ jobs:
               q
             }" | xargs
           }
-
           BLOG_TITLE=$(extract_field "Blog Title")
           BLOG_AUTHORS=$(extract_field "Blog Author(s)")
           BLOG_TAGS=$(extract_field "Blog Tags")
@@ -64,16 +59,21 @@ jobs:
           echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
           echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
-
+          
+          # Get current date
+          CURRENT_DATE=$(date "+%b %d, %Y")
+          echo "Current date: $CURRENT_DATE"
+          
           # Run the blog post creation script.
           python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES"
-
-          # Set the blog title as an output for use in later steps.
+          
+          # Set the blog title and date as outputs for use in later steps.
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
-
+          echo "current_date=$CURRENT_DATE" >> $GITHUB_OUTPUT
+      
       - name: Create Pull Request with Blog
-        uses: peter-evans/create-pull-request@v7.0.6
         id: cpr
+        uses: peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.ACTION_PUB_KEY }}
           commit-message: "(New Blog) Blog Post"
@@ -81,8 +81,8 @@ jobs:
           title: "(New Blog) Blog Post"
           body: |
             Auto-Generated Pull Request
-          branch: python-code-format-${{ github.event.pull_request.number }}
-
+          branch: python-code-format-${{ github.event.issue.number }}
+      
       - name: Create comment on original issue
         uses: peter-evans/create-or-update-comment@v4
         with:
@@ -101,4 +101,4 @@ jobs:
             - **Tags:** ${{ steps.extract.outputs.blog_tags }}
             
             Thank you for your submission!
-          reactions: '+1'
+          reactions: 
