@@ -32,7 +32,7 @@ def create_blog_post_from_args():
     # amd blog release date format Day-of-week Month Day, 12:00:00 PST Year
     # calculate the day of week based on the date
 
-    today = datetime.datetime.today().strftime(%b %d %Y)
+    today = datetime.datetime.today().strftime("%b %d %Y")
     weekday = datetime.datetime.today().weekday()
     day, month, year = today.split(" ")
 
