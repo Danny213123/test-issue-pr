@@ -168,3 +168,15 @@ body:
         - Test & Management
     validations:
       required: true
+  - type: dropdown
+    id: blog_amd_deployment
+    attributes:
+      label: "Deployment Targets"
+      description: "Select deployment target(s)"
+      multiple: true
+      options:
+        - Servers
+        - Embedded Platforms
+        - Laptops
+        - Workstations
+        
