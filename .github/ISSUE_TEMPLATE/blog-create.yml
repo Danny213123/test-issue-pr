@@ -24,11 +24,17 @@ body:
       description: "Enter in the author(s) of the blog."
     validations:
       required: true
-  - type: input
+  - type: checkboxes
     id: blog_tags
     attributes:
       label: "Blog Tags"
       description: "Enter in the tag(s) of the blogs, please look at the approved tags list."
+      options:
+        - label: Tag 1
+        - label: Tag 2
+        - label: Tag 3
+        - label: Tag 4
+        - label: Tag 5
     validations:
       required: true
   - type: input
