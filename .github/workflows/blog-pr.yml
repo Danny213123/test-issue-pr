@@ -81,7 +81,7 @@ jobs:
           title: "(New Blog) Blog Post"
           body: |
             Auto-Generated Pull Request
-          branch: python-code-format-${{ github.event.issue.number }}
+          branch: ${{ github.actor }}-${{ github.event.issue.number }}
       
       - name: Create comment on original issue
         uses: peter-evans/create-or-update-comment@v4
