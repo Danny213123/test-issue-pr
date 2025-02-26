@@ -78,7 +78,7 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           commit-message: "(New Blog) Blog Post"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
-          title: "Python Auto format for Blog Post #${{ github.event.pull_request.number }}"
+          title: "(New Blog) Blog Post"
           body: |
             Auto-Generated Pull Request
           branch: create-pull-request/patch
