@@ -82,15 +82,22 @@ jobs:
             Auto-Generated Pull Request
           branch: python-code-format-${{ github.event.pull_request.number }}
 
-      - name: Create comment
+      - name: Create comment on original issue
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.ACTION_PUB_KEY }}
-          issue-number: "${{ github.event.issue.title }}"
+          issue-number: ${{ github.event.issue.number }}
           body: |
-            This is a multi-line test comment
-            - With GitHub **Markdown** :sparkles:
-            - Created by [create-or-update-comment][1]
-
-            [1]: https://github.com/peter-evans/create-or-update-comment
+            ## Blog Post Created Successfully - ${{ steps.extract.outputs.current_date }}
+            
+            A pull request has been created with your blog post titled: **${{ steps.extract.outputs.blog_title }}**
+            
+            [View the Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
+            
+            ### Blog Details:
+            - **Author(s):** ${{ steps.extract.outputs.blog_authors }}
+            - **Category:** ${{ steps.extract.outputs.blog_category }}
+            - **Tags:** ${{ steps.extract.outputs.blog_tags }}
+            
+            Thank you for your submission!
           reactions: '+1'
