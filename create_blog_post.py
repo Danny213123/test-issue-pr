@@ -80,7 +80,7 @@ myst:
         blog_amd_developer_type=blog_amd_developer_type,
         blog_amd_applications=blog_amd_applications,
         blog_amd_industries=blog_amd_industries,
-        dayweek=day_of_week,
+        weekday=weekday,
         month=month,
         day=day,
         year=year
