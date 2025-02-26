@@ -108,7 +108,7 @@ key_value_propositions: {blog_key_value_proposition}
 language: English
 myst:
     html_meta:
-        "author": "Danny Guan"
+        "author": "{blog_authors}"
         "description lang=en": "Guide to ROCm Blogs Metadata"
         "keywords": "'{blog_keywords}'"
         "property=og:locale": "en_US"
