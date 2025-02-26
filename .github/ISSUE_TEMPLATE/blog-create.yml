@@ -107,11 +107,25 @@ body:
       description: "Enter in the expected developer type(s) for this blog."
     validations:
       required: true
-  - type: input
+  - type: dropdown
     id: blog_amd_applications
     attributes:
       label: "Blog AMD Applications"
       description: "Enter in the expected application(s) for this blog"
+      multiple: true
+      options:
+        - Cloud Computing
+        - Computer Vision
+        - Cybersecurity
+        - Data Analytics
+        - Embedded Computing
+        - Image / Video Generation
+        - High Performance Computing
+        - Large Language Model (LLM)
+        - Natural Language Processing (NLP)
+        - Recommendation System
+        - Reinforcement Learning
+        - Speech Recognition / Synthesis
     validations:
       required: true
   - type: dropdown
