@@ -92,13 +92,9 @@ jobs:
             ## Blog Post Created Successfully - ${{ steps.extract.outputs.current_date }}
             
             A pull request has been created with your blog post titled: **${{ steps.extract.outputs.blog_title }}**
+            Please continue working on the blog via the pull request.
             
             [View the Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
-            
-            ### Blog Details:
-            - **Author(s):** ${{ steps.extract.outputs.blog_authors }}
-            - **Category:** ${{ steps.extract.outputs.blog_category }}
-            - **Tags:** ${{ steps.extract.outputs.blog_tags }}
             
             Thank you for your submission!
           reactions: 
