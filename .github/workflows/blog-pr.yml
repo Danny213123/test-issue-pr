@@ -6,6 +6,7 @@ on:
 
 jobs:
   create-blog-pr:
+    permissions: write-all
     runs-on: ubuntu-latest
     if: startsWith(github.event.issue.title, '[Blog Post]')
     steps:
