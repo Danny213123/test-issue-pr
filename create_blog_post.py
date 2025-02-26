@@ -95,8 +95,7 @@ def create_blog_post_from_args():
 
     day_of_week = calculate_day_of_week(year, d_month, day)
 
-    blog_template = """
----
+    blog_template = """---
 blogpost: false
 blog_title: "{blog_title}"
 date: {blog_release_date}
