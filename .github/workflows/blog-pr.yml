@@ -81,7 +81,7 @@ jobs:
           title: "(New Blog) Blog Post"
           body: |
             Auto-Generated Pull Request
-          branch: create-pull-request/patch
+          branch: python-code-format-${{ github.event.pull_request.number }}
             
       - name: Create commit comment
         uses: peter-evans/commit-comment@v3
