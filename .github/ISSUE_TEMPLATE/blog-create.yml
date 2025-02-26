@@ -135,7 +135,6 @@ body:
       description: "Enter in the expected industries(s) for this blog"
       multiple: true
       options:
-        - Green
         - Aerospace & Defense
         - Architecture, Engineering, & Construction
         - Automotive
