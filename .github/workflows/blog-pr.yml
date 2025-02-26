@@ -74,7 +74,6 @@ jobs:
       - name: Create Pull Request with Blog
         uses: peter-evans/create-pull-request@v7.0.6
         with:
-          token: ${{ secrets.ACTION_PUB_KEY }}
           commit-message: "(New Blog) Blog Post"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           title: "(New Blog) Blog Post"
@@ -85,8 +84,7 @@ jobs:
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v4
         with:
-          token: ${{ secrets.ACTION_PUB_KEY }}
-          issue-number: 1
+          issue-number: "${{ github.event.issue.title }}"
           body: |
             This is a multi-line test comment
             - With GitHub **Markdown** :sparkles:
