@@ -80,14 +80,15 @@ jobs:
           body: |
             Auto-Generated Pull Request
           branch: python-code-format-${{ github.event.pull_request.number }}
-            
-      - name: Create commit comment
-        uses: peter-evans/commit-comment@v3
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v4
         with:
+          issue-number: 1
           body: |
             This is a multi-line test comment
             - With GitHub **Markdown** :sparkles:
-            - Created by [commit-comment][1]
+            - Created by [create-or-update-comment][1]
 
-            [1]: https://github.com/peter-evans/commit-comment
+            [1]: https://github.com/peter-evans/create-or-update-comment
           reactions: '+1'
