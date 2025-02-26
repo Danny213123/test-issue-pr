@@ -87,7 +87,7 @@ body:
       description: "Enter in the expected application(s) for this blog"
     validations:
       required: true
-  - type: input
+  - type: dropdown
     id: blog_amd_industries
     attributes:
       label: "Blog AMD Industries"
