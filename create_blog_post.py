@@ -5,7 +5,7 @@ from numpy import remainder as rem
 
 def gather_args():
     args = sys.argv[1:]
-    if len(args) < 13:
+    if len(args) < 12:
         print("Not enough arguments provided.")
         sys.exit(1)
     
