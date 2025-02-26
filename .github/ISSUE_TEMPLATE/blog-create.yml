@@ -35,6 +35,8 @@ body:
     attributes:
       label: "Blog Category"
       description: "Enter in the category of the blog, please look at the approved category list."
+      options:
+        - label: Developer Resources     
     validations:
       required: true
   - type: input
