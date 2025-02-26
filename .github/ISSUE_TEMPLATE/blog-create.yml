@@ -17,17 +17,43 @@ body:
       description: "Enter in the author(s) of the blog."
     validations:
       required: true
-  - type: checkboxes
+  - type: dropdown
     id: blog_tags
     attributes:
       label: "Blog Tags"
-      description: "Enter in the tag(s) of the blogs, please look at the approved tags list."
+      multiple: true
+      description: "Select tag(s)"
       options:
-        - label: Tag 1
-        - label: Tag 2
-        - label: Tag 3
-        - label: Tag 4
-        - label: Tag 5
+        - Reinforcement Learning
+        - Partner Applications
+        - AI/ML
+        - Scientific Computing
+        - Fine-Tuning
+        - System-Tuning
+        - C++
+        - GenAI
+        - Linear Algebra
+        - Compiler
+        - Hardware
+        - Computer Vision
+        - HPC
+        - Time Series
+        - Installation
+        - JAX
+        - LLM
+        - Memory
+        - Multimodal
+        - OpenMP
+        - Optimization
+        - Performance
+        - Profiling
+        - PyTorch
+        - Serving
+        - Speech
+        - Diffusion Model
+        - TensorFlow
+        - Recommendation Systems
+        - Kubernetes
     validations:
       required: true
   - type: dropdown
