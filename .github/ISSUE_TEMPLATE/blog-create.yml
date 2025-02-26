@@ -98,10 +98,11 @@ body:
     attributes:
       label: "Blog AMD Industries"
       description: "Enter in the expected industries(s) for this blog"
+      multiple: true
       options:
-        - label: Green
-        - label: Orange
-        - label: Red
-        - label: Yellow
+        - Green
+        - Orange
+        - Red
+        - Yellow
     validations:
       required: true
