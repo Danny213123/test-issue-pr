@@ -198,3 +198,8 @@ body:
         - Workstations
     validations:
       required: true
+  - type: input
+    id: jira_ticket
+    attributes:
+      label: "Jira Ticket"
+      description: "Enter in the full link of the Jira ticket for this blog. (Ignore if not applicable)"
