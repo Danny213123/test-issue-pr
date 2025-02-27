@@ -79,6 +79,20 @@ myst:
         "amd_industries": "{blog_amd_industries}"
         "amd_blog_releasedate": {weekday} {month} {day}, 12:00:00 PST {year}
 ---
+
+# {blog_title}
+ROCm Blogs follow a consistent magazine article approach where there is no explicit introduction per se,
+but rather each blog starts with a brief, wide-scoped introductory text, without a section title,
+before moving into the blog’s first section.
+The introductory text should include a concise description of your blog: briefly describe for the 
+reader how they will benefit from the blog, detailing its main deliverables. Please use an active-voice,
+call-to-action approach.
+
+## Summary
+ROCm Blogs follow a consistent magazine-article approach where each blog ends with a “Summary” section.
+Please provide a brief summary of your blog, reiterating the main takeaways and deliverables, as well
+as what the reader learned from it.
+
 """
     blog_template = blog_template.format(
         blog_title=blog_title,
