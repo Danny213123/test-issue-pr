@@ -90,6 +90,15 @@ jobs:
             
             This is the pull request for your blog post based on [issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}). The automated system has created the initial blog structure for you.
             
+            ### 📋 Next Steps
+            
+            Please continue working on the blog via the pull request. You can:
+            
+            - [ ] **Review the metadata** carefully for any mistakes or adjustments needed
+            - [ ] **Edit the content** in the Markdown files to complete your blog post
+            - [ ] **Request reviews** from team members when ready
+            - [ ] **Address any feedback** before final publication
+            
             ### ✅ Content Checklist:
 
             - [ ] Content follows [ROCm Tech Blogs Style Guide](https://confluence.amd.com/display/DCGPUPM/ROCm+Tech+Blogs%3A+Mission%2C+Stakeholders%2C+Processes%2C+Style+and+Metadata)
