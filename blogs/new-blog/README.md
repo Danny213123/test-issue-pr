@@ -29,6 +29,7 @@ myst:
 ---
 
 # New Blog
+
 ROCm Blogs follow a consistent magazine article approach where there is no explicit introduction per se,
 but rather each blog starts with a brief, wide-scoped introductory text, without a section title,
 before moving into the blog’s first section.
@@ -37,6 +38,7 @@ reader how they will benefit from the blog, detailing its main deliverables. Ple
 call-to-action approach.
 
 ## Summary
+
 ROCm Blogs follow a consistent magazine-article approach where each blog ends with a “Summary” section.
 Please provide a brief summary of your blog, reiterating the main takeaways and deliverables, as well
 as what the reader learned from it.
