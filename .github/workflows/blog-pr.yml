@@ -39,18 +39,18 @@ jobs:
           # Remove "[Blog Post]" prefix if present
           BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[Blog Post\][[:space:]]*//')
           
-          BLOG_AUTHORS=$(extract_field "Blog Author")
-          BLOG_TAGS=$(extract_field "Blog Tags")
-          BLOG_CATEGORY=$(extract_field "Blog Category")
-          BLOG_AUDIENCE=$(extract_field "Blog Audience")
-          BLOG_KVP=$(extract_field "Blog Key Value Proposition")
-          BLOG_KEYWORDS=$(extract_field "Blog Keywords")
-          BLOG_DESCRIPTION=$(extract_field "Blog Description")
-          BLOG_AMD_TECHNICAL_BLOG_TYPE=$(extract_field "Blog AMD Technical Blog Type")
-          BLOG_AMD_PRODUCT_TYPE=$(extract_field "Blog AMD Product Type")
-          BLOG_AMD_DEVELOPER_TYPE=$(extract_field "Blog AMD Developer Type")
-          BLOG_AMD_APPLICATIONS=$(extract_field "Blog AMD Applications")
-          BLOG_AMD_INDUSTRIES=$(extract_field "Blog AMD Industries")
+          BLOG_AUTHORS=$(extract_field "Author")
+          BLOG_TAGS=$(extract_field "Tags")
+          BLOG_CATEGORY=$(extract_field "Category")
+          BLOG_AUDIENCE=$(extract_field "Audience")
+          BLOG_KVP=$(extract_field "Key Value Proposition")
+          BLOG_KEYWORDS=$(extract_field "Keywords")
+          BLOG_DESCRIPTION=$(extract_field "Description")
+          BLOG_AMD_TECHNICAL_BLOG_TYPE=$(extract_field "AMD Technical Blog Type")
+          BLOG_AMD_PRODUCT_TYPE=$(extract_field "AMD Product Type")
+          BLOG_AMD_DEVELOPER_TYPE=$(extract_field "AMD Developer Type")
+          BLOG_AMD_APPLICATIONS=$(extract_field "AMD Applications")
+          BLOG_AMD_INDUSTRIES=$(extract_field "AMD Industries")
           BLOG_DEPLOYMENT_TARGETS=$(extract_field "Deployment Targets")
           
           echo "Blog Title: $BLOG_TITLE"
@@ -107,9 +107,10 @@ jobs:
             
             ### 🔄 Workflow Information:
             
-            - You can continue to edit files directly in this PR
-            - Changes will automatically update in the PR preview
-            - When ready for review, change the PR status
+            - Review the Markdown file for any mistakes / review the auto-generated content
+            - You can continue to edit files directly in this PR, changes will automatically update in the PR preview
+            - When ready for review, get in contact with the proper reviewers and add the appropriate labels
+            - When the reviewers are done and the blog is ready to go, we will push your blog to live
             
             ---
             
