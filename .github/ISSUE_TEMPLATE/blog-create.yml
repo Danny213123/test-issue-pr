@@ -211,6 +211,10 @@ body:
     id: jira_ticket
     attributes:
       label: "DCGPUBU Jira Ticket"
-      description: "Enter in the full link of the Jira ticket for this blog. Skip to file later but publication requires a ticket."
+      description: |
+        "Enter in the full link of the Jira ticket for this blog. Skip to file later but publication requires a ticket."
+        **Enter in N/A if not-applicable**
       placeholder: |
-        Link to Jira Ticket for this blog
+        Link to Jira Ticket for this blog. Enter in N/A if not-applicable. 
+    validations:
+      required: true
