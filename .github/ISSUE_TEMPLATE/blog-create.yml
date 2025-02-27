@@ -210,7 +210,7 @@ body:
   - type: input
     id: jira_ticket
     attributes:
-      label: "Jira Ticket"
-      description: "Enter in the full link of the Jira ticket for this blog. (Ignore if not applicable)"
+      label: "DCGPUBU Jira Ticket"
+      description: "Enter in the full link of the Jira ticket for this blog. Skip to file later but publication requires a ticket."
       placeholder: |
         Link to Jira Ticket for this blog
