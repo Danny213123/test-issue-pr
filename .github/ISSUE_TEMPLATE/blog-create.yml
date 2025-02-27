@@ -104,11 +104,16 @@ body:
         - System on Modules (SOMs)
     validations:
       required: true
-  - type: input
+  - type: dropdown
     id: blog_amd_technical_blog_type
     attributes:
       label: "AMD Technical Blog Type"
       description: "Enter in the technical blog type for this blog."
+      options:
+        - Applications and models
+        - Ecosystems and Partners
+        - Tools, Features, and Optimizations
+        - Benchmarks and Testing
     validations:
       required: true
   - type: dropdown
