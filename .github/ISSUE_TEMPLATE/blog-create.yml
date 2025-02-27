@@ -6,8 +6,8 @@ body:
   - type: input
     id: blog_authors
     attributes:
-      label: "Blog Author(s)"
-      description: "Enter in the author(s) of the blog."
+      label: "Blog Author"
+      description: "Please list any author(s) of this blog"
     validations:
       required: true
   - type: dropdown
