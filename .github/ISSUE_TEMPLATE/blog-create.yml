@@ -79,7 +79,7 @@ body:
       description: "Enter in the key value proposition(s) of the blog."
     validations:
       required: true
-  type: input
+  - type: input
     id: blog_description
     attributes:
       label: "Blog Description"
