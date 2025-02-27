@@ -8,6 +8,8 @@ body:
     attributes:
       label: "Author"
       description: "Please list any author(s) of this blog"
+      placeholder: |
+        Separate Authors with commas, ex. John Smith, John Doe, Danny Guan
     validations:
       required: true
   - type: dropdown
@@ -15,7 +17,8 @@ body:
     attributes:
       label: "Tags"
       multiple: true
-      description: "Select tag(s)"
+      description: |
+        "Select tag(s) from the dropdown menu, you may select multiple tags."
       options:
         - Reinforcement Learning
         - Partner Applications
@@ -53,7 +56,11 @@ body:
     id: blog_category
     attributes:
       label: "Category"
-      description: "Enter in the category of the blog, please look at the approved category list."
+      description: |
+        Enter in the category of the blog, please look at the approved category list.
+        - **Applications & Models** - Blogs related to Applications and/or models.
+        - **Ecosystems and Partners** - Blogs related to specific partner or greater ecosystem collaborations.
+        - **Software Tools & Optimizations** - Blogs related to Software tools and/or optimizations.
       options:
         - Applications & models
         - Ecosystems and Partners
@@ -79,6 +86,8 @@ body:
     attributes:
       label: "Description"
       description: "Enter in the description that best describes your blog (Maximum 150 characters). Used as HTML meta data and sumary on the main page."
+      placeholder: |
+        Keep description below 150 character cut off.
     validations:
       required: true
       maxLength: 150
@@ -203,3 +212,5 @@ body:
     attributes:
       label: "Jira Ticket"
       description: "Enter in the full link of the Jira ticket for this blog. (Ignore if not applicable)"
+      placeholder: |
+        Link to Jira Ticket for this blog
