@@ -127,13 +127,14 @@ jobs:
             
             A pull request has been created with your blog post titled: **${{ steps.extract.outputs.blog_title }}**
             
-            ### 🔄 Next Steps
+            ### 📋 Next Steps
             
             Please continue working on the blog via the pull request. You can:
             
-            1. Add content to the blog post
-            2. Make any necessary adjustments to the metadata
-            3. Request reviews when ready
+            1. **Review the metadata** carefully for any mistakes or adjustments needed
+            2. **Edit the content** in the Markdown files to complete your blog post
+            3. **Request reviews** from team members when ready
+            4. **Address any feedback** before final publication
             
             [View the Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
             
