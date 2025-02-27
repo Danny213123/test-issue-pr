@@ -51,7 +51,7 @@ jobs:
           BLOG_AMD_DEVELOPER_TYPE=$(extract_field "Blog AMD Developer Type")
           BLOG_AMD_APPLICATIONS=$(extract_field "Blog AMD Applications")
           BLOG_AMD_INDUSTRIES=$(extract_field "Blog AMD Industries")
-          DEPLOYMENT_TARGETS=$(extract_field "Deployment Targets")
+          BLOG_DEPLOYMENT_TARGETS=$(extract_field "Deployment Targets")
           
           echo "Blog Title: $BLOG_TITLE"
           echo "Blog Author(s): $BLOG_AUTHORS"
@@ -66,21 +66,10 @@ jobs:
           echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
           echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
-          echo "Deployment Targets: $DEPLOYMENT_TARGETS"
+          echo "Deployment Targets: $BLOG_DEPLOYMENT_TARGETS"
+
+          python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$BLOG_DEPLOYMENT_TARGETS"
           
-          # Get current date
-          CURRENT_DATE=$(date "+%b %d, %Y")
-          echo "Current date: $CURRENT_DATE"
-          
-          # Run the blog post creation script
-          # Check if deployment targets parameter is expected by the script
-          if grep -q "DEPLOYMENT_TARGETS" create_blog_post.py; then
-            python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$DEPLOYMENT_TARGETS"
-          else
-            python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION"
-          fi
-          
-          # Set the blog title and date as outputs for use in later steps.
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
           echo "current_date=$CURRENT_DATE" >> $GITHUB_OUTPUT
       
