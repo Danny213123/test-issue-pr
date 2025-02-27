@@ -41,6 +41,7 @@ jobs:
           BLOG_AUDIENCE=$(extract_field "Blog Audience")
           BLOG_KVP=$(extract_field "Blog Key Value Proposition")
           BLOG_KEYWORDS=$(extract_field "Blog Keywords")
+          BLOG_DESCRIPTION=$(extract_field "Blog Description")
           BLOG_AMD_TECHNICAL_BLOG_TYPE=$(extract_field "Blog AMD Technical Blog Type")
           BLOG_AMD_PRODUCT_TYPE=$(extract_field "Blog AMD Product Type")
           BLOG_AMD_DEVELOPER_TYPE=$(extract_field "Blog AMD Developer Type")
@@ -54,6 +55,7 @@ jobs:
           echo "Blog Audience: $BLOG_AUDIENCE"
           echo "Blog Key Value Proposition: $BLOG_KVP"
           echo "Blog Keywords: $BLOG_KEYWORDS"
+          echo "Blog Description: $BLOG_DESCRIPTION"
           echo "Blog AMD Technical Blog Type: $BLOG_AMD_TECHNICAL_BLOG_TYPE"
           echo "Blog AMD Product Type: $BLOG_AMD_PRODUCT_TYPE"
           echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
@@ -65,7 +67,7 @@ jobs:
           echo "Current date: $CURRENT_DATE"
           
           # Run the blog post creation script.
-          python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES"
+          python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION"
           
           # Set the blog title and date as outputs for use in later steps.
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
