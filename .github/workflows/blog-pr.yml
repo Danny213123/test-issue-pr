@@ -84,7 +84,7 @@ jobs:
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           title: "${{ github.event.issue.title }}"
           body: |
-            ## 📝 Blog Post PR
+            ## 📝 Blog Post Pull Request
             
             Hello @${{ github.event.issue.user.login }}, 
             
