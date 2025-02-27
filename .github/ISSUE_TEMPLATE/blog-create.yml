@@ -4,13 +4,6 @@ title: "[Blog Post]"
 labels: ["Blog Creation"]
 body:
   - type: input
-    id: blog_title
-    attributes:
-      label: "Blog Title"
-      description: "Enter the title of your blog post."
-    validations:
-      required: true
-  - type: input
     id: blog_authors
     attributes:
       label: "Blog Author(s)"
