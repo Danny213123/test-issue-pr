@@ -43,7 +43,10 @@ def create_blog_post_from_args():
     # calculate the day of week based on the date
 
     today = datetime.today().strftime("%b %d %Y")
-    weekday = datetime.today().weekday()
+    
+    weekday_names = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    weekday = weekday_names[datetime.today().weekday()]
+    
     day, month, year = today.split(" ")
 
     blog_template = """---
