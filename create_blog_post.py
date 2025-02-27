@@ -5,7 +5,7 @@ from numpy import remainder as rem
 
 def gather_args():
     args = sys.argv[1:]
-    if len(args) < 12:
+    if len(args) < 13:
         print("Not enough arguments provided.")
         sys.exit(1)
     
@@ -26,6 +26,7 @@ def create_blog_post_from_args():
     blog_amd_developer_type = args[9]
     blog_amd_applications = args[10]
     blog_amd_industries = args[11]
+    blog_description = args[12]
 
     # check all of the date formats
 
@@ -50,7 +51,7 @@ language: English
 myst:
     html_meta:
         "author": "{blog_authors}"
-        "description lang=en": "Guide to ROCm Blogs Metadata"
+        "description lang=en": "{blog_description}"
         "keywords": "'{blog_keywords}'"
         "property=og:locale": "en_US"
         "amd_category": "Developer Resources"
@@ -83,7 +84,8 @@ myst:
         weekday=weekday,
         month=month,
         day=day,
-        year=year
+        year=year,
+        blog_description=blog_description,
     )
 
     os.makedirs(f"blogs/{blog_title}", exist_ok=True)
