@@ -1,6 +1,6 @@
 name: "Create a new blog post"
 description: "Submit this form to automatically create a new blog post"
-title: "[Blog Post] "
+title: "[New Post] "
 labels: ["Blog Creation"]
 body:
   - type: input
