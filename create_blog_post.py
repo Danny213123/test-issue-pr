@@ -11,6 +11,14 @@ def gather_args():
     
     return args
 
+def truncate_string(input_string: str) -> str:
+
+    cleaned_string = re.sub(r"[!@#$%^&*?/|]", "", input_string)
+
+    transformed_string = re.sub(r"\s+", "-", cleaned_string)
+
+    return transformed_string.lower()
+
 def create_blog_post_from_args():
 
     args = gather_args()
@@ -88,7 +96,9 @@ myst:
         blog_description=blog_description,
     )
 
-    os.makedirs(f"blogs/{blog_title}", exist_ok=True)
+    directory_name = truncate_string(blog_title)
+
+    os.makedirs(f"blogs/{directory_name}", exist_ok=True)
 
     # create README.md
     with open(f"blogs/{blog_title}/README.md", "w") as f:
