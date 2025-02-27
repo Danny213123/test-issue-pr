@@ -1,0 +1,14 @@
+name: "Create a new author bio"
+description: "Submit this form to automatically create a new author bio"
+title: "[New Author] "
+labels: ["Author Bio Creation"]
+body:
+  - type: textarea
+    id: author_picture
+    attributes:
+      label: "Author Picture"
+      description: |
+        Attatch a bio picture if you have one.
+        https://docs.github.com/en/github/writing-on-github/working-with-advanced-formatting/attaching-files
+      placeholder: |
+        Drag and drop your image file here
