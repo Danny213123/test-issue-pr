@@ -20,21 +20,25 @@ jobs:
           ISSUE_BODY="${{ github.event.issue.body }}"
           echo "Issue body:"
           echo "$ISSUE_BODY"
-          # Parse each field from the issue body using grep and sed.
+          
+          # Improved field extraction to handle multiline content and line numbers
           extract_field() {
             local header="$1"
-            echo "$ISSUE_BODY" | sed -n "/### ${header}/{
-              n
-              :a
-              /^[[:space:]]*\$/ {
-                n
-                ba
-              }
-              p
-              q
-            }" | xargs
+            # Find the section and extract all content until the next ###
+            echo "$ISSUE_BODY" | awk -v header="### $header" '
+              BEGIN { found=0; content=""; }
+              $0 ~ header { found=1; next; }
+              found && $0 ~ /^###/ { found=0; }
+              found && !/^[0-9]+$/ { gsub(/^[0-9]+/, ""); content=content"\n"$0; }
+              END { gsub(/^\n+/, "", content); gsub(/\n+$/, "", content); print content; }
+            ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
           }
-          BLOG_TITLE=${{ github.event.issue.title }}
+          
+          # Using the raw issue title
+          BLOG_TITLE="${{ github.event.issue.title }}"
+          # Remove "[Blog Post]" prefix if present
+          BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[Blog Post\][[:space:]]*//')
+          
           BLOG_AUTHORS=$(extract_field "Blog Author(s)")
           BLOG_TAGS=$(extract_field "Blog Tags")
           BLOG_CATEGORY=$(extract_field "Blog Category")
@@ -47,6 +51,7 @@ jobs:
           BLOG_AMD_DEVELOPER_TYPE=$(extract_field "Blog AMD Developer Type")
           BLOG_AMD_APPLICATIONS=$(extract_field "Blog AMD Applications")
           BLOG_AMD_INDUSTRIES=$(extract_field "Blog AMD Industries")
+          DEPLOYMENT_TARGETS=$(extract_field "Deployment Targets")
           
           echo "Blog Title: $BLOG_TITLE"
           echo "Blog Author(s): $BLOG_AUTHORS"
@@ -61,13 +66,19 @@ jobs:
           echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
           echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
+          echo "Deployment Targets: $DEPLOYMENT_TARGETS"
           
           # Get current date
           CURRENT_DATE=$(date "+%b %d, %Y")
           echo "Current date: $CURRENT_DATE"
           
-          # Run the blog post creation script.
-          python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION"
+          # Run the blog post creation script
+          # Check if deployment targets parameter is expected by the script
+          if grep -q "DEPLOYMENT_TARGETS" create_blog_post.py; then
+            python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$DEPLOYMENT_TARGETS"
+          else
+            python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION"
+          fi
           
           # Set the blog title and date as outputs for use in later steps.
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
@@ -123,7 +134,14 @@ jobs:
             ## Blog Post Created Successfully - ${{ steps.extract.outputs.current_date }}
             
             A pull request has been created with your blog post titled: **${{ steps.extract.outputs.blog_title }}**
-            Please continue working on the blog via the pull request.
+            
+            ### 🔄 Next Steps
+            
+            Please continue working on the blog via the pull request. You can:
+            
+            1. Add content to the blog post
+            2. Make any necessary adjustments to the metadata
+            3. Request reviews when ready
             
             [View the Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
             
