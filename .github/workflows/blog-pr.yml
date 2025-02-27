@@ -9,7 +9,7 @@ jobs:
     if: startsWith(github.event.issue.title, '[Blog Post]')
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Extract Inputs from Issue Body and Create Blog Post
         id: extract
         shell: bash
