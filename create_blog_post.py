@@ -51,7 +51,7 @@ def create_blog_post_from_args():
     day, month, year = today.split(" ")
 
     blog_template = """---
-blogpost: false
+blogpost: true
 blog_title: "{blog_title}"
 date: {today}
 author: '{blog_authors}'
