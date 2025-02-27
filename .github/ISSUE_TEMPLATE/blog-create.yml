@@ -87,7 +87,7 @@ body:
       label: "Description"
       description: "Enter in the description that best describes your blog (Maximum 150 characters). Used as HTML meta data and sumary on the main page."
       placeholder: |
-        Keep description below 150 character cut off.
+        Keep description below 150 character cut off
     validations:
       required: true
       maxLength: 150
