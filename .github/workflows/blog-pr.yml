@@ -90,26 +90,7 @@ jobs:
             
             This is the pull request for your blog post based on [issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}). The automated system has created the initial blog structure for you.
             
-            ### 📋 Next Steps:
-            
-            1. **Review the metadata** carefully for any mistakes or adjustments needed
-            2. **Edit the content** in the Markdown files to complete your blog post
-            3. **Request reviews** from team members when ready
-            4. **Address any feedback** before final publication
-            
-            ### 🔍 Helpful Resources:
-            
-            - [GitHub Markdown Guide](https://guides.github.com/features/mastering-markdown/)
-            - [Getting Started with Markdown](https://www.markdownguide.org/getting-started/)
-            - [Markdown Cheatsheet](https://www.markdownguide.org/cheat-sheet/)
-            - [Markdown Syntax Guide](https://www.markdownguide.org/basic-syntax/)
-            
-            ### 🔄 Workflow Information:
-            
-            - Review the Markdown file for any mistakes / review the auto-generated content
-            - You can continue to edit files directly in this PR, changes will automatically update in the PR preview
-            - When ready for review, get in contact with the proper reviewers and add the appropriate labels
-            - When the reviewers are done and the blog is ready to go, we will push your blog to live
+            ### 📋 Content Checklist:
             
             ---
             
@@ -135,6 +116,20 @@ jobs:
             2. **Edit the content** in the Markdown files to complete your blog post
             3. **Request reviews** from team members when ready
             4. **Address any feedback** before final publication
+
+            ### 🔍 Helpful Resources:
+            
+            - [GitHub Markdown Guide](https://guides.github.com/features/mastering-markdown/)
+            - [Getting Started with Markdown](https://www.markdownguide.org/getting-started/)
+            - [Markdown Cheatsheet](https://www.markdownguide.org/cheat-sheet/)
+            - [Markdown Syntax Guide](https://www.markdownguide.org/basic-syntax/)
+            
+            ### 🔄 Workflow Information:
+            
+            - Review the Markdown file for any mistakes / review the auto-generated content
+            - You can continue to edit files directly in this PR, changes will automatically update in the PR preview
+            - When ready for review, get in contact with the proper reviewers and add the appropriate labels
+            - When the reviewers are done and the blog is ready to go, we will push your blog to live
             
             [View the Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
             
