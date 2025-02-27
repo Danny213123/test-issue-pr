@@ -111,11 +111,20 @@ body:
       description: "Enter in the technical blog type for this blog."
     validations:
       required: true
-  - type: input
+  - type: dropdown
     id: blog_amd_developer_type
     attributes:
       label: "AMD Developer Type"
+      multiple: true
       description: "Enter in the expected developer type(s) for this blog."
+      options:
+        - ML/AI Developer
+        - Application Developer
+        - Game Developer
+        - Software Developer
+        - HPC Developer
+        - Algorithm Developer
+        - Data & Research Scientists
     validations:
       required: true
   - type: dropdown
