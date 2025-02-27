@@ -83,7 +83,7 @@ jobs:
           token: ${{ secrets.ACTION_PUB_KEY }}
           commit-message: "${{ github.event.issue.title }}"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
-          title: "[New Blog] ${{ github.event.issue.title }}"
+          title: "${{ github.event.issue.title }}"
           body: |
             ## 📝 Blog Post PR
             
