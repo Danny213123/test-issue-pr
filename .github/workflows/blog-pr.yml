@@ -90,7 +90,7 @@ jobs:
             
             This is the pull request for your blog post based on [issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}). The automated system has created the initial blog structure for you.
             
-            ### 📋 Content Checklist:
+            ### ✅ Content Checklist:
 
             - [ ] Content follows [ROCm Tech Blogs Style Guide](https://confluence.amd.com/display/DCGPUPM/ROCm+Tech+Blogs%3A+Mission%2C+Stakeholders%2C+Processes%2C+Style+and+Metadata)
             - [ ] Post aligns with [Diataxis framework](https://diataxis.fr/) guidelines
@@ -100,7 +100,7 @@ jobs:
             - [ ] No confidential information included
             - [ ] Reviewed recently published blog posts and existing Pull Requests to confirm there are no published or in-flight posts on this same topic
 
-            ### 📋 Signoffs and aprovals
+            ### ✅ Signoffs and aprovals
 
             Please complete the steps below to the best of your ability. This section **must be completed** before publishing.
             
@@ -109,7 +109,7 @@ jobs:
             - [ ] **Thumbnail:** Thumbnail image for blog post included in PR
             - [ ] **Post description:** Provide a 2-3 line summary that grabs the reader's attention:
             
-            ### 📋 Blog author/team signoffs
+            ### ✅ Blog author/team signoffs
             
             - [ ] Content is in final draft state
             - [ ] Images/assets are optimized and properly placed
