@@ -216,5 +216,3 @@ body:
         **Enter in N/A if not-applicable**
       placeholder: |
         Link to Jira Ticket for this blog. Enter in N/A if not-applicable. 
-    validations:
-      required: true
