@@ -104,17 +104,13 @@ jobs:
 
             Please complete the steps below to the best of your ability. This section **must be completed** before publishing.
             
-            - [ ] **Technical reviewer approval:** (EDIT THIS LINE and replace with the correct @githubid)
-            - [ ] **Editorial team approval:** (EDIT THIS LINE and replace with the correct @githubidd)
+            - [ ] **Technical reviewer approval:**
+            - [ ] **Editorial team approval:**
             - [ ] **Thumbnail:** Thumbnail image for blog post included in PR
             - [ ] **Post description:** Provide a 2-3 line summary that grabs the reader's attention:
             
             ### 📋 Blog author/team signoffs
             
-            - [ ] **Legal self review:** AMD Employees only – confirm legal self review is complete. [Legal self review traffic lights completed](https://amdcloud.sharepoint.com/sites/amd-legal/Shared%20Documents/Forms/AllItems.aspx?sortField=Modified&isAscending=false&id=%2Fsites%2Famd%2Dlegal%2FShared%20Documents%2FDisclaimer%20and%20Notices%2Epdf&viewid=71efe44a%2D19a2%2D4b81%2D83df%2D05ab2f7ffa73&parent=%2Fsites%2Famd%2Dlegal%2FShared%20Document). Remove this line if not applicable.
-            - [ ] **License check:** Ensure that any licenses included with your content are correct
-            - [ ] **Post-review changes:** Confirm that changes from technical review and editorial feedback have been made
-            - [ ] All sections above are completed
             - [ ] Content is in final draft state
             - [ ] Images/assets are optimized and properly placed
             - [ ] Linter checks are passing
