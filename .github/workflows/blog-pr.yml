@@ -81,7 +81,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.ACTION_PUB_KEY }}
-          commit-message: "[New Blog] ${{ github.event.issue.title }}"
+          commit-message: "${{ github.event.issue.title }}"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           title: "[New Blog] ${{ github.event.issue.title }}"
           body: |
