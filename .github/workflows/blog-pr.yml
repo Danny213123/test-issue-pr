@@ -6,7 +6,7 @@ jobs:
   create-blog-pr:
     permissions: write-all
     runs-on: ubuntu-latest
-    if: startsWith(github.event.issue.title, '[Blog Post]')
+    if: startsWith(github.event.issue.title, '[New Post]')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,8 +35,8 @@ jobs:
           
           # Using the raw issue title
           BLOG_TITLE="${{ github.event.issue.title }}"
-          # Remove "[Blog Post]" prefix if present
-          BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[Blog Post\][[:space:]]*//')
+
+          BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[New Post\][[:space:]]*//')
           
           BLOG_AUTHORS=$(extract_field "Author")
           BLOG_TAGS=$(extract_field "Tags")
