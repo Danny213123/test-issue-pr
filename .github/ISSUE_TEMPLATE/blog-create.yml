@@ -79,6 +79,14 @@ body:
       description: "Enter in the key value proposition(s) of the blog."
     validations:
       required: true
+  type: input
+    id: blog_description
+    attributes:
+      label: "Blog Description"
+      description: "Enter in the description that best describes your blog (Maximum 150 characters)"
+    validations:
+      required: true
+      maxLength: 150
   - type: input
     id: blog_keywords
     attributes:
