@@ -180,4 +180,5 @@ body:
         - Embedded Platforms
         - Laptops
         - Workstations
-        
+    validations:
+      required: true
