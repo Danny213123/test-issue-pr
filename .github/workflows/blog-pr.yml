@@ -68,6 +68,9 @@ jobs:
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
           echo "Deployment Targets: $BLOG_DEPLOYMENT_TARGETS"
 
+          CURRENT_DATE=$(date "+%b %d, %Y")
+          echo "Current date: $CURRENT_DATE"
+
           python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$BLOG_DEPLOYMENT_TARGETS"
           
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
