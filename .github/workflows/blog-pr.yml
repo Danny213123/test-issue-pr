@@ -34,7 +34,7 @@ jobs:
               q
             }" | xargs
           }
-          BLOG_TITLE=$(extract_field "Blog Title")
+          BLOG_TITLE=${{ github.event.issue.title }}
           BLOG_AUTHORS=$(extract_field "Blog Author(s)")
           BLOG_TAGS=$(extract_field "Blog Tags")
           BLOG_CATEGORY=$(extract_field "Blog Category")
