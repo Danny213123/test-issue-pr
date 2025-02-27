@@ -102,7 +102,7 @@ myst:
     os.makedirs(f"blogs/{directory_name}", exist_ok=True)
 
     # create README.md
-    with open(f"blogs/{blog_title}/README.md", "w") as f:
+    with open(f"blogs/{directory_name}/README.md", "w") as f:
         f.write(blog_template)
 
     return None
