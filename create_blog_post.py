@@ -126,7 +126,7 @@ echo "c 226:128 rwm" > /sys/fs/cgroup/devices/devices.deny #Deny access to devic
 echo "c 226:128 rwm" > /sys/fs/cgroup/devices/devices.allow #Allow access to device 226:128 in docker (renderD128)
 ```
 
-```note
+```{note}
 This is how to add a note. See the [myst markdown admomition guide](https://mystmd.org/guide/admonitions) for more details.
 ```
 
@@ -165,6 +165,7 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         year=year,
         blog_description=blog_description,
         blog_amd_deployment=blog_amd_deployment,
+        note="{note}",
     )
 
     directory_name = truncate_string(blog_title)
