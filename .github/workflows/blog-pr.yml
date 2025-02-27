@@ -39,7 +39,7 @@ jobs:
           # Remove "[Blog Post]" prefix if present
           BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[Blog Post\][[:space:]]*//')
           
-          BLOG_AUTHORS=$(extract_field "Blog Author(s)")
+          BLOG_AUTHORS=$(extract_field "Blog Author")
           BLOG_TAGS=$(extract_field "Blog Tags")
           BLOG_CATEGORY=$(extract_field "Blog Category")
           BLOG_AUDIENCE=$(extract_field "Blog Audience")
