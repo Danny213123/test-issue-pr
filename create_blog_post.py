@@ -119,6 +119,7 @@ This is a table.
 | NPS4 |              |      ✔       |
 
 Below is a code snippet from the console. You can also use bash, C++, python and other languages.
+
 ```console
 echo "c 226:128 rwm" > /sys/fs/cgroup/devices/devices.deny #Deny access to device 226:128 in docker (renderD128)
 
