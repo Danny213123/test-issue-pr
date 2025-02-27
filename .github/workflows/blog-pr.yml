@@ -21,7 +21,6 @@ jobs:
           echo "Issue body:"
           echo "$ISSUE_BODY"
           
-          # Improved field extraction to handle multiline content and line numbers
           extract_field() {
             local header="$1"
             # Find the section and extract all content until the next ###
