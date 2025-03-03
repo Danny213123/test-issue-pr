@@ -1,4 +1,4 @@
-name: Auto Create Blog Post PR
+- name: Create Pull Request with Blogname: Auto Create Blog Post PR
 on:
   issues:
     types: [opened, edited]
@@ -8,9 +8,22 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.event.issue.labels.*.name, 'Blog Creation')
     steps:
+      - name: Install GitHub CLI
+        if: ${{ always() }}
+        run: |
+          if ! command -v gh &> /dev/null; then
+            echo "Installing GitHub CLI..."
+            type -p curl >/dev/null || apt install curl -y
+            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+            sudo apt update
+            sudo apt install gh -y
+          fi
+          
+          # Authenticate GitHub CLI
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Extract Inputs from Issue Body and Create Blog Post
         id: extract
         shell: bash
         run: |
@@ -78,20 +91,36 @@ jobs:
           for field_info in "${REQUIRED_FIELDS[@]}"; do
             IFS=':' read -r field_var field_name <<< "$field_info"
             field_value="${!field_var}"
+            # Trim whitespace from the field value
+            field_value=$(echo "$field_value" | xargs)
+            
             if [ -z "$field_value" ]; then
               VALIDATION_ERRORS+="- Missing required field: $field_name\n"
               VALIDATION_PASSED="false"
+            else
+              echo "Field $field_name is present: '$field_value'"
             fi
           done
           
-          # Set validation status for output
           echo "validation_passed=$VALIDATION_PASSED" >> $GITHUB_OUTPUT
           
           if [ "$VALIDATION_PASSED" = "false" ]; then
+          
             echo "validation_errors<<EOF" >> $GITHUB_OUTPUT
             echo -e "$VALIDATION_ERRORS" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
-            # Don't exit with error, allow workflow to continue to error comment step
+            echo "Validation failed. Will not proceed with blog creation."
+            
+            if [ "${VALIDATION_PASSED}" = "true" ]; then
+            
+              CREATE_PR=true
+
+              echo "create_pr=${CREATE_PR}" >> $GITHUB_OUTPUT
+            else
+              echo "create_pr=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "All validations passed successfully!"
           fi
 
           CURRENT_DATE=$(date "+%b %d, %Y")
@@ -103,9 +132,9 @@ jobs:
           echo "current_date=$CURRENT_DATE" >> $GITHUB_OUTPUT
           echo "jira_ticket=$BLOG_JIRA" >> $GITHUB_OUTPUT
       
-      - name: Create Pull Request with Blog
+      - name: Create success comment on original issue
         id: cpr
-        if: ${{ !contains(steps.extract.outputs.validation_passed, 'false') }}
+        if: steps.extract.outputs.validation_passed == 'true' && steps.extract.outputs.do_pr_create == 'true'
         uses: peter-evans/create-pull-request@v7.0.6
         with:
           commit-message: "${{ github.event.issue.title }}"
@@ -165,13 +194,15 @@ jobs:
             Corresponding Jira Ticket: ${{ steps.extract.outputs.jira_ticket }}
           branch: ${{ github.actor }}-${{ github.event.issue.number }}
       
-      - name: Create success comment on original issue
-        if: ${{ !contains(steps.extract.outputs.validation_passed, 'false') }}
+      - name: Create error comment on original issue
+        if: steps.extract.outputs.validation_passed == 'true' && steps.extract.outputs.do_pr_create == 'true'
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## Blog Post Created Successfully - ${{ steps.extract.outputs.current_date }}
+
+            Hello @${{ github.event.issue.user.login }}, 
             
             A pull request has been created with your blog post titled: **${{ steps.extract.outputs.blog_title }}**
             
@@ -204,13 +235,15 @@ jobs:
             Thank you for your submission!
           reactions: '+1'
 
-      - name: Create error comment on original issue
-        if: ${{ contains(steps.extract.outputs.validation_passed, 'false') || failure() }}
+      - name: Extract Inputs from Issue Body and Create Blog Post
+        if: steps.extract.outputs.validation_passed == 'false'
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## ❌ Blog Post Creation Failed
+
+            Hello @${{ github.event.issue.user.login }}, 
             
             The automated system encountered validation errors while trying to create your blog post.
             
