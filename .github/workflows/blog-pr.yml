@@ -70,6 +70,7 @@ jobs:
 
           # Check for empty required fields
           VALIDATION_ERRORS=""
+          VALIDATION_PASSED="true"
           REQUIRED_FIELDS=("BLOG_TITLE:Title" "BLOG_AUTHORS:Author" "BLOG_TAGS:Tags" "BLOG_CATEGORY:Category" 
                           "BLOG_AUDIENCE:Audience" "BLOG_KVP:Key Value Proposition" "BLOG_KEYWORDS:Keywords" 
                           "BLOG_DESCRIPTION:Description")
@@ -79,18 +80,18 @@ jobs:
             field_value="${!field_var}"
             if [ -z "$field_value" ]; then
               VALIDATION_ERRORS+="- Missing required field: $field_name\n"
+              VALIDATION_PASSED="false"
             fi
           done
           
           # Set validation status for output
-          if [ -n "$VALIDATION_ERRORS" ]; then
-            echo "validation_passed=false" >> $GITHUB_OUTPUT
+          echo "validation_passed=$VALIDATION_PASSED" >> $GITHUB_OUTPUT
+          
+          if [ "$VALIDATION_PASSED" = "false" ]; then
             echo "validation_errors<<EOF" >> $GITHUB_OUTPUT
             echo -e "$VALIDATION_ERRORS" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
-            exit 1
-          else
-            echo "validation_passed=true" >> $GITHUB_OUTPUT
+            # Don't exit with error, allow workflow to continue to error comment step
           fi
 
           CURRENT_DATE=$(date "+%b %d, %Y")
@@ -104,7 +105,7 @@ jobs:
       
       - name: Create Pull Request with Blog
         id: cpr
-        if: success()
+        if: ${{ !contains(steps.extract.outputs.validation_passed, 'false') }}
         uses: peter-evans/create-pull-request@v7.0.6
         with:
           commit-message: "${{ github.event.issue.title }}"
@@ -165,7 +166,7 @@ jobs:
           branch: ${{ github.actor }}-${{ github.event.issue.number }}
       
       - name: Create success comment on original issue
-        if: success() && steps.extract.outputs.validation_passed == 'true'
+        if: ${{ !contains(steps.extract.outputs.validation_passed, 'false') }}
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -204,7 +205,7 @@ jobs:
           reactions: '+1'
 
       - name: Create error comment on original issue
-        if: failure() || steps.extract.outputs.validation_passed == 'false'
+        if: ${{ contains(steps.extract.outputs.validation_passed, 'false') || failure() }}
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
