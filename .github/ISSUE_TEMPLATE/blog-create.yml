@@ -12,16 +12,10 @@ body:
 
         The title of the issue will be the title of the new blog. Choose a blog title that is concise, accessible, and informal as possible.
 
-        ```note
-        :suspect: PLEASE ENSURE YOU CAREFULLY READ EACH INPUT AND DOUBLE CHECK YOUR RESPONSES
-        ```
-  - type: markdown
-    id: additional_note
-    attributes:
-      value: |
-        > **IMPORTANT NOTE:** All fields in this form are required to successfully create a blog post. Missing information will cause the automated system to reject your submission. Please complete all sections thoroughly.
+        > **IMPORTANT NOTE:** All fields in this form are required to successfully create a blog post. Missing information will cause the automated system to reject your submission. Please complete all sections thoroughly and double check your responses.
         
         > **TIP:** If your blog post is rejected, simply edit the issue to add any missing information, and the system will automatically try again.
+
     validations:
       required: false
   - type: input
