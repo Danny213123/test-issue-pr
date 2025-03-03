@@ -102,22 +102,29 @@ jobs:
             fi
           done
           
+          # Set validation status for output
           echo "validation_passed=$VALIDATION_PASSED" >> $GITHUB_OUTPUT
           
           if [ "$VALIDATION_PASSED" = "false" ]; then
-          
             echo "validation_errors<<EOF" >> $GITHUB_OUTPUT
             echo -e "$VALIDATION_ERRORS" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
             echo "Validation failed. Will not proceed with blog creation."
-            
+            # Set decision logic - only create if valid
             if [ "${VALIDATION_PASSED}" = "true" ]; then
-            
-              CREATE_PR=true
-
-              echo "create_pr=${CREATE_PR}" >> $GITHUB_OUTPUT
+              DO_PR_CREATE=true
+              # Check if a PR has already been created for this issue
+              # This prevents duplicate PRs when the workflow runs on edits
+              PR_EXISTS=$(gh pr list --search "${{ github.event.issue.number }} in:title" --state open --json number | jq length)
+              if [ "$PR_EXISTS" -gt "0" ]; then
+                echo "A pull request for this issue already exists - will not create another one"
+                DO_PR_CREATE=false
+              else
+                echo "No existing pull request found - will create one"
+              fi
+              echo "do_pr_create=${DO_PR_CREATE}" >> $GITHUB_OUTPUT
             else
-              echo "create_pr=false" >> $GITHUB_OUTPUT
+              echo "do_pr_create=false" >> $GITHUB_OUTPUT
             fi
           else
             echo "All validations passed successfully!"
@@ -201,8 +208,6 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## Blog Post Created Successfully - ${{ steps.extract.outputs.current_date }}
-
-            Hello @${{ github.event.issue.user.login }}, 
             
             A pull request has been created with your blog post titled: **${{ steps.extract.outputs.blog_title }}**
             
@@ -242,8 +247,6 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## ❌ Blog Post Creation Failed
-
-            Hello @${{ github.event.issue.user.login }}, 
             
             The automated system encountered validation errors while trying to create your blog post.
             
