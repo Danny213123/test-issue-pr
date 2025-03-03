@@ -6,7 +6,7 @@ jobs:
   create-blog-pr:
     permissions: write-all
     runs-on: ubuntu-latest
-    if: startsWith(github.event.issue.title, '[New Post]')
+    if: contains(github.event.issue.labels.*.name, 'Blog Creation')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -71,7 +71,7 @@ jobs:
           CURRENT_DATE=$(date "+%b %d, %Y")
           echo "Current date: $CURRENT_DATE"
 
-          python3 create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$BLOG_DEPLOYMENT_TARGETS"
+          python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$BLOG_DEPLOYMENT_TARGETS"
           
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
           echo "current_date=$CURRENT_DATE" >> $GITHUB_OUTPUT
@@ -81,10 +81,10 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v7.0.6
         with:
-          token: ${{ secrets.ACTION_PUB_KEY }}
           commit-message: "${{ github.event.issue.title }}"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           title: "${{ github.event.issue.title }}"
+          labels: Blog Creation
           body: |
             ## 📝 Blog Post Pull Request
             
@@ -122,6 +122,11 @@ jobs:
             
             ### ✅ Blog author/team signoffs
             
+            - [ ] **Legal self review:** AMD Employees only – confirm legal self review is complete. [Legal self review traffic lights completed](https://amdcloud.sharepoint.com/sites/amd-legal/Shared%20Documents/Forms/AllItems.aspx?sortField=Modified&isAscending=false&id=%2Fsites%2Famd%2Dlegal%2FShared%20Documents%2FDisclaimer%20and%20Notices%2Epdf&viewid=71efe44a%2D19a2%2D4b81%2D83df%2D05ab2f7ffa73&parent=%2Fsites%2Famd%2Dlegal%2FShared%20Document). Remove this line if not applicable.
+            - [ ] **Legal Review** If the blog contains any performance gains, do you have legal clearance?
+            - [ ] **License check:** Ensure that any licenses included with your content are correct
+            - [ ] **Post-review changes:** Confirm that changes from technical review and editorial feedback have been made
+            - [ ] All sections above are completed
             - [ ] Content is in final draft state
             - [ ] Images/assets are optimized and properly placed
             - [ ] Linter checks are passing
@@ -136,7 +141,6 @@ jobs:
       - name: Create comment on original issue
         uses: peter-evans/create-or-update-comment@v4
         with:
-          token: ${{ secrets.ACTION_PUB_KEY }}
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## Blog Post Created Successfully - ${{ steps.extract.outputs.current_date }}
