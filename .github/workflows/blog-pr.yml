@@ -68,6 +68,31 @@ jobs:
           echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
           echo "Deployment Targets: $BLOG_DEPLOYMENT_TARGETS"
 
+          # Check for empty required fields
+          VALIDATION_ERRORS=""
+          REQUIRED_FIELDS=("BLOG_TITLE:Title" "BLOG_AUTHORS:Author" "BLOG_TAGS:Tags" "BLOG_CATEGORY:Category" 
+                          "BLOG_AUDIENCE:Audience" "BLOG_KVP:Key Value Proposition" "BLOG_KEYWORDS:Keywords" 
+                          "BLOG_DESCRIPTION:Description")
+          
+          for field_info in "${REQUIRED_FIELDS[@]}"; do
+            IFS=':' read -r field_var field_name <<< "$field_info"
+            field_value="${!field_var}"
+            if [ -z "$field_value" ]; then
+              VALIDATION_ERRORS+="- Missing required field: $field_name\n"
+            fi
+          done
+          
+          # Set validation status for output
+          if [ -n "$VALIDATION_ERRORS" ]; then
+            echo "validation_passed=false" >> $GITHUB_OUTPUT
+            echo "validation_errors<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$VALIDATION_ERRORS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "validation_passed=true" >> $GITHUB_OUTPUT
+          fi
+
           CURRENT_DATE=$(date "+%b %d, %Y")
           echo "Current date: $CURRENT_DATE"
 
@@ -79,6 +104,7 @@ jobs:
       
       - name: Create Pull Request with Blog
         id: cpr
+        if: success()
         uses: peter-evans/create-pull-request@v7.0.6
         with:
           commit-message: "${{ github.event.issue.title }}"
@@ -138,7 +164,8 @@ jobs:
             Corresponding Jira Ticket: ${{ steps.extract.outputs.jira_ticket }}
           branch: ${{ github.actor }}-${{ github.event.issue.number }}
       
-      - name: Create comment on original issue
+      - name: Create success comment on original issue
+        if: success() && steps.extract.outputs.validation_passed == 'true'
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -175,3 +202,36 @@ jobs:
             
             Thank you for your submission!
           reactions: '+1'
+
+      - name: Create error comment on original issue
+        if: failure() || steps.extract.outputs.validation_passed == 'false'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## ❌ Blog Post Creation Failed
+            
+            The automated system encountered errors while trying to create your blog post.
+            
+            ### 🚫 Validation Errors:
+            
+            ${{ steps.extract.outputs.validation_errors }}
+            
+            ### 📋 Next Steps:
+            
+            1. Please edit your issue to include all required fields
+            2. Make sure none of the required sections are empty
+            3. Once corrected, the system will automatically process your request again
+            
+            Required fields include:
+            - Title
+            - Author
+            - Tags
+            - Category
+            - Audience
+            - Key Value Proposition
+            - Keywords
+            - Description
+            
+            Thank you for your understanding!
+          reactions: 'eyes'
