@@ -211,28 +211,48 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## ❌ Blog Post Creation Failed
+
+            Hello @${{ github.event.issue.user.login }}, 
             
-            The automated system encountered errors while trying to create your blog post.
+            The automated system encountered validation errors while trying to create your blog post.
             
-            ### 🚫 Validation Errors:
+            ### 🚫 Missing Required Information:
             
+            ```diff
             ${{ steps.extract.outputs.validation_errors }}
+            ```
+            
+            ### 📊 Validation Status:
+            
+            | Field | Status | Notes |
+            |-------|--------|-------|
+            | Title | ${{ !contains(steps.extract.outputs.validation_errors, 'Title') && '✅ Present' || '❌ MISSING' }} | Must have a blog title |
+            | Author | ${{ !contains(steps.extract.outputs.validation_errors, 'Author') && '✅ Present' || '❌ MISSING' }} | Author name is required |
+            | Tags | ${{ !contains(steps.extract.outputs.validation_errors, 'Tags') && '✅ Present' || '❌ MISSING' }} | At least one tag is required |
+            | Category | ${{ !contains(steps.extract.outputs.validation_errors, 'Category') && '✅ Present' || '❌ MISSING' }} | Blog category is required |
+            | Audience | ${{ !contains(steps.extract.outputs.validation_errors, 'Audience') && '✅ Present' || '❌ MISSING' }} | Target audience must be specified |
+            | Key Value Proposition | ${{ !contains(steps.extract.outputs.validation_errors, 'Key Value Proposition') && '✅ Present' || '❌ MISSING' }} | Required for SEO |
+            | Keywords | ${{ !contains(steps.extract.outputs.validation_errors, 'Keywords') && '✅ Present' || '❌ MISSING' }} | Required for search indexing |
+            | Description | ${{ !contains(steps.extract.outputs.validation_errors, 'Description') && '✅ Present' || '❌ MISSING' }} | Blog description is required |
             
             ### 📋 Next Steps:
             
-            1. Please edit your issue to include all required fields
-            2. Make sure none of the required sections are empty
-            3. Once corrected, the system will automatically process your request again
+            1. Edit your issue to add the missing information marked with ❌ above
+            2. Each of these fields should be under their respective section headers (e.g., `### Author`)
+            3. Once all required fields are provided, the system will automatically process your request again
             
-            Required fields include:
-            - Title
-            - Author
-            - Tags
-            - Category
-            - Audience
-            - Key Value Proposition
-            - Keywords
-            - Description
+            ### 📝 Example Format:
+            
+            ```
+            ### Author
+            Your name here
+            
+            ### Tags
+            tag1, tag2, tag3
+            
+            ### Category
+            Your category here
+            ```
             
             Thank you for your understanding!
           reactions: 'eyes'
