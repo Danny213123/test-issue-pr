@@ -1,7 +1,7 @@
 name: Auto Create Blog Post PR
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
 jobs:
   create-blog-pr:
     permissions: write-all
@@ -211,8 +211,6 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## ❌ Blog Post Creation Failed
-
-            Hello @${{ github.event.issue.user.login }}, 
             
             The automated system encountered validation errors while trying to create your blog post.
             
