@@ -225,6 +225,7 @@ jobs:
           commit-message: "${{ github.event.issue.title }}"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           title: "${{ github.event.issue.title }}"
+          token: "${{ ROCM_BLOG_PAT }}"
           labels: Blog Creation
           body: |
             ## 📝 Blog Post Pull Request
