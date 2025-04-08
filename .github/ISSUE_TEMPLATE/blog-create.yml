@@ -199,6 +199,21 @@ body:
         - Open-Source Tools
     validations:
       required: true
+  - type: dropdown
+    id: amd_blog_topic_categories
+    attributes:
+      label: "AMD Blog Topic Categories"
+      description: "Select Blog Topic Category which best fit your blog"
+      multiple: false
+      options:
+        - Adaptive & Embedded Computing
+        - AI & Intelligent Systems
+        - Enterprise & Data Center Trends
+        - HPC & Scientific Computing
+        - Industry Applications & Use Cases
+        - Software & Ecosystem
+    validations:
+      required: true
   - type: input
     id: jira_ticket
     attributes:
