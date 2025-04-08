@@ -1,7 +1,8 @@
-from datetime import datetime
 import os
 import re
 import sys
+from datetime import datetime
+
 from numpy import remainder as rem
 
 def gather_args():
@@ -9,7 +10,7 @@ def gather_args():
     if len(args) < 14:
         print("Not enough arguments provided.")
         sys.exit(1)
-    
+
     return args
 
 def truncate_string(input_string: str) -> str:
@@ -24,31 +25,36 @@ def create_blog_post_from_args():
 
     args = gather_args()
     blog_title = args[0]
-    blog_authors = args[1]
-    blog_tags = args[2]
-    blog_category = args[3]
-    blog_audience = args[4]
-    blog_key_value_proposition = args[5]
-    blog_keywords = args[6]
-    blog_amd_technical_blog_type = args[7]
-    blog_amd_product_type = args[8]
-    blog_amd_developer_type = args[9]
-    blog_amd_applications = args[10]
-    blog_amd_industries = args[11]
-    blog_description = args[12]
-    blog_amd_deployment = args[13]
+    blog_file_path = args[1]
+    blog_authors = args[2]
+    blog_tags = args[3]
+    blog_category = args[4]
+    blog_audience = args[5]
+    blog_key_value_proposition = args[6]
+    blog_keywords = args[7]
+    blog_amd_technical_blog_type = args[8]
+    blog_amd_applications = args[9]
+    blog_description = args[10]
+    blog_hardware_amd_deployment = args[11]
+    blog_software_amd_deployment = args[12]
 
     # check all of the date formats
 
     # amd blog release date format Day-of-week Month Day, 12:00:00 PST Year
     # calculate the day of week based on the date
 
-    today = datetime.today().strftime("%b %d %Y")
-    
+    today = datetime.today().strftime("%d %b %Y")
+
     weekday_names = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"]
     weekday = weekday_names[datetime.today().weekday()]
-    
+
     day, month, year = today.split(" ")
+
+    images_template = """
+Upload your blog thumbnail here. Please delete this file after uploading image.
+
+delete me before publishing blog
+"""
 
     blog_template = """---
 blogpost: true
@@ -71,12 +77,9 @@ myst:
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "{blog_amd_technical_blog_type}"
-        "amd_developer_type": "{blog_amd_developer_type}"
-        "amd_deployment": "{blog_amd_deployment}"
-        "amd_product_type": "{blog_amd_product_type}"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
+        "amd_hardware_deployment": "{blog_hardware_amd_deployment}"
+        "amd_software_deployment": "{blog_software_amd_deployment}"
         "amd_applications": "{blog_amd_applications}"
-        "amd_industries": "{blog_amd_industries}"
         "amd_blog_releasedate": {weekday} {month} {day}, 12:00:00 PST {year}
 ---
 <!---
@@ -112,7 +115,26 @@ call-to-action approach.
 
 ## Body
 
+This is where you unleash your creativity. Please follow these general guidelines:
+
+• use actionable, hands-on, conversational approach, guiding your reader through the blog and its content, maintaining engagement. Use active voice, call-to-action (CTA) text (e.g. “Interested in learning more?”, “Run this function by using”, “Try implementing this yourself”)
+
+• keep your writing structured, engaging, and actionable. Divide the blog’s content into logical sections. 
+
+• Make sure you provide the required background and prerequisites for your blog. Outline any foundational knowledge and tools the reader will likely require.
+
+• When describing a process use step-by-step guide, employ numbered steps or subheadings to guide the reader through the process.
+
+• Integrate examples and use cases: provide real-world applications and scenarios. Reflect on common pitfalls and possible troubleshooting approaches, addressing potential mistakes and solutions.
+
+Leeway into figures, equations, etc.
+
+## Sample markdown
+
+This section covers some markdown techniques commonly used in a blogs.
+
 This is a table.
+
 |      | SPX (MI300X) | CPX (MI300X) |
 | ---- | :----------: | :----------: |
 | NPS1 |      ✔       |      ✔       |
@@ -155,26 +177,35 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         blog_key_value_proposition=blog_key_value_proposition,
         blog_keywords=blog_keywords,
         blog_amd_technical_blog_type=blog_amd_technical_blog_type,
-        blog_amd_product_type=blog_amd_product_type,
-        blog_amd_developer_type=blog_amd_developer_type,
         blog_amd_applications=blog_amd_applications,
-        blog_amd_industries=blog_amd_industries,
         weekday=weekday,
         month=month,
         day=day,
         year=year,
         blog_description=blog_description,
-        blog_amd_deployment=blog_amd_deployment,
+        blog_hardware_amd_deployment=blog_hardware_amd_deployment,
+        blog_software_amd_deployment=blog_software_amd_deployment,
         note="{note}",
     )
 
-    directory_name = truncate_string(blog_title)
+    blog_file_path = truncate_string(blog_file_path[:20])
+    dir_blog_name = "-".join(blog_file_path.split("-")[:3])
+    dir_category_name = truncate_string(blog_category)
 
-    os.makedirs(f"blogs/{directory_name}", exist_ok=True)
+    if dir_category_name == "applications-models":
+        dir_category_name = "artificial-intelligence"
+    elif dir_category_name == "software-tools-optimizations":
+        dir_category_name = "software-tools-optimization"
+
+    os.makedirs(f"blogs/{dir_category_name}/{dir_blog_name}", exist_ok=True)
+    os.makedirs(f"blogs/{dir_category_name}/{dir_blog_name}/images", exist_ok=True)
 
     # create README.md
-    with open(f"blogs/{directory_name}/README.md", "w") as f:
+    with open(f"blogs/{dir_category_name}/{dir_blog_name}/README.md", "w") as f:
         f.write(blog_template)
+
+    with open(f"blogs/{dir_category_name}/{dir_blog_name}/images/README.md", "w") as f:
+        f.write(images_template)
 
     return None
 
