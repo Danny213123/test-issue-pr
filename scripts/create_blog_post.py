@@ -7,7 +7,7 @@ from numpy import remainder as rem
 
 def gather_args():
     args = sys.argv[1:]
-    if len(args) < 13:
+    if len(args) < 14:
         print("Not enough arguments provided.")
         sys.exit(1)
 
@@ -37,6 +37,7 @@ def create_blog_post_from_args():
     blog_description = args[10]
     blog_hardware_amd_deployment = args[11]
     blog_software_amd_deployment = args[12]
+    blog_amd_category_topic = args[13]
 
     # check all of the date formats
 
@@ -80,6 +81,7 @@ myst:
         "amd_hardware_deployment": "{blog_hardware_amd_deployment}"
         "amd_software_deployment": "{blog_software_amd_deployment}"
         "amd_applications": "{blog_amd_applications}"
+        "amd_blog_category_topic": "{blog_amd_category_topic}"
         "amd_blog_releasedate": {weekday} {month} {day}, 12:00:00 PST {year}
 ---
 <!---
@@ -185,6 +187,7 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         blog_description=blog_description,
         blog_hardware_amd_deployment=blog_hardware_amd_deployment,
         blog_software_amd_deployment=blog_software_amd_deployment,
+        blog_amd_category_topic=blog_amd_category_topic,
         note="{note}",
     )
 
