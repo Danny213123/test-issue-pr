@@ -259,10 +259,10 @@ jobs:
 
             Please complete the steps below to the best of your ability. This section **must be completed** before publishing.
             
-            - [ ] **Technical reviewer approval**
-            - [ ] **Editorial team approval**
+            - [ ] **Technical reviewer approval** : (add names here)
+            - [ ] **Editorial team approval**: (add names here)
             - [ ] **Thumbnail:** Thumbnail image for blog post included in PR
-            - [ ] **Post description:** Provide a 2-3 line summary that grabs the reader's attention:
+            - [ ] **Post description:** Provide a 2-3 line summary that grabs the reader's attention: (add here)
             
             ### ✅ Blog author/team signoffs
             
